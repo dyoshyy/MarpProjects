@@ -1,0 +1,6 @@
+{
+  "markdown-preview-enhanced.hideDefaultVSCodeMarkdownPreviewButtons": false,
+  "markdown.marp.themes": [
+    "./marp-themes/rinkou.css"
+  ]
+}
