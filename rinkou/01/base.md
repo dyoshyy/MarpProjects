@@ -1,8 +1,6 @@
 ---
 marp: true
 theme: rinkou
-style: ./style.css
-footer: '2024/04/18'
 ---
 <!--
 class: title
@@ -15,16 +13,19 @@ class: title
 <!--
 class: slides
 -->
-# 内容
-## 1. はじめに
-- ポイント1
-- ポイント2
-- ポイント3
+# 目次
+- 2 Probabilities  
+  - 2.1 The Rules of Probability  
+    - 2.1.1 A medical screening example
+    - 2.1.2 The sum and product rules
+    - 2.1.3 Bayes’theorem
+    - 2.1.4 Medical screening revisited
+    - 2.1.5 Prior and posterior probabilities
+    - 2.1.6 Independent variables
 
 ---
 <!--
 class: slides
 -->
-# おわり
+# 2 Probabilities
 
-ありがとうございました。
