@@ -53,9 +53,9 @@ paginate: true
 # 2 Probabilities
 
 **ex) 曲がったコイン**
-- 凹面が60%凸面が40%の確率で出るコインを仮定
+- 凹面が60%凸面が40%の確率で出ると仮定
   → 無限回の試行における定義
-- コインの形がわからない時,結果を予測するには？
+- 形がわからない時, 結果を予測するには？
   → 対称性からそれぞれ50%を仮定するのが合理的
 ![w:500px](images/2_2.png)
 
@@ -72,8 +72,8 @@ paginate: true
 # 2.1 The Rules of Probability
 
 ## シンプルかつパワフルな確率論の基本法則
-  - 加法則
-  - 乗法則
+  - 和の法則
+  - 積の法則
 
 ---
 # 2.1.1 A medical screening example
@@ -115,7 +115,7 @@ $$\sum_{i=1}^L{p(X=x_i)} = 1 \tag{2.3}$$
 # 2.1.2 The sum and product rules
 $c_i=\sum_j{n_{ij}}$と(2.1), (2.2)より
 $$\small p(X=x_i) = \sum_{j=1}^{M}{p(X=x_i, Y=y_j)} \tag{2.4}$$
-→**確率の和法則**
+→**確率の和の法則**
 - 周辺確率とも呼ばれる
 - Yについて足し合わせる(周辺化)ことで得られる
 
@@ -132,84 +132,86 @@ $$\sum_{j=1}^{M}{p(Y=y_j|X=x_i)} = 1 \tag{2.6}$$
 ---
 # 2.1.2 The sum and product rules
 (2.1), (2.2), (2.5)より
-$$p(X=x_i,Y=y_j) = \frac{n_{ij}}{c_i} = \frac{n_{ij}}{N} \frac{N}{c_i} = \frac{n_{ij}}{N} \frac{1}{p(X=x_i)} = \frac{p(X=x_i, Y=y_j)}{p(X=x_i)} \tag{2.7}$$
+$$\small p(X=x_i,Y=y_j) = \frac{n_{ij}}{N} = \frac{n_{ij}}{c_i}\cdot\frac{c_i}{N}$$
+$$\small =p(Y=y_i|X=x_i)p(X=x_i)\tag{2.7}$$
+→**確率の積の法則**
 
 ---
 # 2.1.2 The sum and product rules
 
-- **加法則**:
-  $$p(X) = \sum_Y p(X, Y)$$
-
-- **乗法則**:
-  $$p(X, Y) = p(Y|X)p(X)$$
-- 確率を支配する基本的な法則
+- **和の法則**:
+  $$p(X) = \sum_Y p(X, Y)\tag{2.8}$$
+- **積の法則**:
+  $$p(X, Y) = p(Y|X)p(X)\tag{2.9}$$
 
 ---
-## 2.1.3 Bayes' theorem
+# 2.1.3 Bayes' theorem
 
-$$p(Y|X) = \frac{p(X|Y)p(Y)}{p(X)}$$
+$$p(Y|X) = \frac{p(X|Y)p(Y)}{p(X)}\tag{2.10}$$
 
-- "逆向き"の条件付き確率の関係を示す
-
----
-## 2.1.3 Bayes' theorem
-
-- 事前確率: $p(C)$
-- 事後確率: $p(C|T)$
-  - データを観測した後の確率
+和の法則を用いて分母を変形：
+$$p(X)=\sum_Y{p(X|Y)p(Y)}\tag{2.11}$$
 
 ---
-## 2.1.4 Medical screening revisited
+# 2.1.3 Bayes' theorem
 
-- 加法則と乗法則を使って:
-  - 陽性反応の確率: $p(T=1) = 0.0387$
-
----
-## 2.1.4 Medical screening revisited
-
-- ベイズの定理を使って:
-  - 陽性の場合のがん確率: $p(C=1|T=1) = 0.23$
-- 直感に反するが正しい
-  - がんの事前確率が低い(1%)ため
+![w:800px](images/2_5.png)
 
 ---
-## 2.1.5 Prior and Posterior Probabilities
+# 2.1.4 Medical screening revisited
+Medical screeningの問題に和と積の法則を適用する
+
+$C$: がんの有無 (0: なし, 1: あり)
+
+$$\small p(C=1) = 1/100 \tag{2.12}$$
+$$\small p(C=0) = 99/100 \tag{2.13}$$
+
+$T$: 検査の結果 (0: 陰性, 1: 陽性)
+
+$$\small p(T=1|C=1) = 90/100 \tag{2.14}$$
+$$\small p(T=0|C=1) = 10/100 \tag{2.15}$$
+$$\small p(T=1|C=0) = 3/100 \tag{2.16}$$
+$$\small p(T=0|C=0) = 97/100 \tag{2.17}$$
+
+---
+# 2.1.4 Medical screening revisited
+以下の条件を満たすよう正規化されている:
+$$\scriptsize p(T=1|C=1)+ p(T=0|C=1) = 1 \tag{2.18}$$
+$$\scriptsize p(T=1|C=0)+ p(T=0|C=0) = 1 \tag{2.19}$$
+Q1.陽性反応の確率は?
+$$\scriptsize p(T=1) = p(T=1|C=0)p(C=0) + p(T=1|C=1)p(C=1)$$
+$$\scriptsize = \frac{3}{100}\times\frac{99}{100}+\frac{90}{100}\times\frac{1}{100}=0.0387 \tag{2.20}$$
+
+
+しかし...
+実際には1%しかがんを患っていない
+
+---
+# 2.1.4 Medical screening revisited
+Q2.陽性の場合がんである確率は?
+$$\scriptsize p(C=1|T=1) = \frac{p(T=1|C=1)p(C=1)}{p(T=1)}\tag{2.21}$$
+$$\scriptsize = \frac{90}{100}\times\frac{1}{100}\times\frac{10,000}{387}=\frac{90}{387} \simeq 0.23 \tag{2.22}$$
+
+---
+# 2.1.5 Prior and Posterior Probabilities
 
 - 事前確率: $p(C)$
   - 検査結果を観測する前の確率
-
----
-## 2.1.5 Prior and Posterior Probabilities
-
 - 事後確率: $p(C|T)$
   - 検査結果を観測した後の確率
-- 例:
+
+がん検査の例:
   - 事前確率 $p(C) = 1\%$
   - 事後確率 $p(C|T=1) = 23\%$
-    - 陽性の場合、はるかに高い
 
 ---
-## 2.1.6 Independent Variables
+# 2.1.6 Independent Variables
 
 - $p(X, Y) = p(X)p(Y)$ の場合、$X$と$Y$は独立
-- 例: コインを続けて投げる
 
----
-## 2.1.6 Independent Variables
-
-- 条件付き確率分布は変化しない:
+ex) コインを続けて投げる
+- 条件付き確率は変化しない:
   $$p(Y|X) = p(Y)$$
-- 独立変数の場合:
+- 検査結果とがんの有無が独立の場合:
   $$p(C|T) = p(C)$$
-  - 検査結果はがんについて何も教えてくれない
-
----
-# まとめ
-
-- 確率論は不確実性を定量化するための一貫したフレームワークを提供する
-- 主要な概念:
-  - 加法則と乗法則
-  - ベイズの定理
-  - 事前確率と事後確率
-  - 独立変数
-- 多くの機械学習手法の基礎となる
+  →検査結果はがんについて何も教えてくれない

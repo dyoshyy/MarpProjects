@@ -1,3 +1,6 @@
 {
   "markdown.marp.enableHtml": true,
+  "cSpell.words": [
+    "scriptsize"
+  ],
 }
