@@ -1,21 +1,19 @@
 /* @theme rinkou */
 
+@import "default";
+
 section {
     font-family: "Meiryo", sans-serif;
-    font-size: 50px;
-    padding: 40px;
-    width: 960px;
-    height: 720px;
+    padding: 4% 0 0 4%;
+    justify-content: start;
     background-color: rgb(255, 255, 255);
 }
 
 /* タイトル */
 section.title {
-    color: rgb(32, 32, 32);
     font-size: 28pt;
     text-align: left;
-    margin-left: 5%;
-    margin-top: 5%;
+    justify-content: center;
 }
 
 section.title h1 {
@@ -26,21 +24,49 @@ section.title h1 {
 
 /* スライド */
 section.slides {
-    color: rgb(32, 32, 32);
-    font-size: 50px;
-    margin-left: auto;
+    font-size: 28pt;
+    line-height: 1.3;
 }
 
 section.slides h1 {
     font-size: 32pt;
-}
-
-section.slides h2 {
-    font-size: 50px;
     color: rgb(10, 104, 136);
 }
 
+section.slides h2 {
+    font-size: 32pt;
+    color: rgb(0, 0, 0);
+}
+
 section.slides ul {
+    padding-left: 5%;
+    padding-top: 1%;
+}
+
+section.slides ol {
     font-size: 28pt;
-    line-height: 1.5;
+}
+
+section.slides img {
+    position: absolute;
+    height: auto;
+    bottom: 7%;
+    right: 5%;
+}
+
+/* フッター */
+footer {
+    position: absolute;
+    bottom: 1%;
+    display: flex;
+    justify-content: center;
+    font-size: 16pt;
+}
+
+/* ページ番号 */
+section::after {
+    content: attr(data-marpit-pagination)" / "attr(data-marpit-pagination-total);
+    position: absolute;
+    bottom: 1%;
+    font-size: 16pt;
 }
