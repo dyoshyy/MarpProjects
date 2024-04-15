@@ -9,6 +9,7 @@ _class: title
 -->
 # Deep Learning: Foundations and Concepts 2024
 
+Section: 2.1
 2024/4/18 Daiki Yoshikawa
 
 ---
@@ -112,7 +113,26 @@ $$\sum_{i=1}^L{p(X=x_i)} = 1 \tag{2.3}$$
 
 ---
 # 2.1.2 The sum and product rules
+$c_i=\sum_j{n_{ij}}$と(2.1), (2.2)より
+$$\small p(X=x_i) = \sum_{j=1}^{M}{p(X=x_i, Y=y_j)} \tag{2.4}$$
+→**確率の和法則**
+- 周辺確率とも呼ばれる
+- Yについて足し合わせる(周辺化)ことで得られる
 
+---
+# 2.1.2 The sum and product rules
+$X=x_i$のインスタンスのみを考える
+$Y=y_j$となる割合:
+$$p(Y=y_j|X=x_i) = \frac{n_{ij}}{c_i} \tag{2.5}$$
+→**条件付き確率**
+
+$\sum_j{n_{ij}=c_i}$より以下を得る
+$$\sum_{j=1}^{M}{p(Y=y_j|X=x_i)} = 1 \tag{2.6}$$
+
+---
+# 2.1.2 The sum and product rules
+(2.1), (2.2), (2.5)より
+$$p(X=x_i,Y=y_j) = \frac{n_{ij}}{c_i} = \frac{n_{ij}}{N} \frac{N}{c_i} = \frac{n_{ij}}{N} \frac{1}{p(X=x_i)} = \frac{p(X=x_i, Y=y_j)}{p(X=x_i)} \tag{2.7}$$
 
 ---
 # 2.1.2 The sum and product rules
