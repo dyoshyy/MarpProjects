@@ -25,8 +25,6 @@ section.title h1 {
 /* スライド */
 section.slides {
     font-size: 28pt;
-    /* padding-right: 5%;
-    padding-top: 3%; */
     line-height: 1.3;
 }
 
@@ -53,7 +51,7 @@ section.slides ol {
 p:has(img) {
     position: absolute;
     text-align: center;
-    font-size: 20pt;
+    font-size: 18pt;
     height: auto;
     bottom: 6%;
     right: 3%;
@@ -70,8 +68,13 @@ footer {
 
 /* ページ番号 */
 section::after {
-    content: attr(data-marpit-pagination)" / "attr(data-marpit-pagination-total);
+    content: attr(data-marpit-pagination)"/"attr(data-marpit-pagination-total);
     position: absolute;
     bottom: 1%;
     font-size: 16pt;
 }
+
+/* 数式 */
+.MathJax {
+    font-size: 20pt;
+    }
