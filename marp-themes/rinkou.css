@@ -49,11 +49,17 @@ section.slides ol {
     padding-top: 1%;
 }
 
-section.slides img {
+/* 図 */
+figure {
     position: absolute;
+    text-align: center;
     height: auto;
     bottom: 7%;
     right: 5%;
+}
+
+figcaption {
+    font-size: 20pt;
 }
 
 /* フッター */
