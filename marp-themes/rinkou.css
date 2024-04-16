@@ -50,16 +50,13 @@ section.slides ol {
 }
 
 /* 図 */
-figure {
+p:has(img) {
     position: absolute;
     text-align: center;
-    height: auto;
-    bottom: 7%;
-    right: 5%;
-}
-
-figcaption {
     font-size: 20pt;
+    height: auto;
+    bottom: 6%;
+    right: 3%;
 }
 
 /* フッター */

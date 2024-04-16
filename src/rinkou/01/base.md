@@ -45,10 +45,8 @@ paginate: true
 - $x_2$が観測されない場合ノイズが大きい (b)
 - $x_2$が観測されるとノイズが小さくなる (c)
 
-<figure>
-<img src="images/2_1.png" width="700px">
-<figcaption>図 2.1 </figcaption>
-</figure>
+![w:700px](images/2_1.png)
+図 2.1
 
 ---
 # 2 Probabilities
@@ -68,10 +66,8 @@ paginate: true
 - 形がわからない時, 結果を予測するには？
   → 対称性からそれぞれ50%を仮定するのが合理的
 
-<figure>
-<img src="images/2_2.png" width="400px">
-<figcaption>図 2.2 </figcaption>
-</figure>
+![w:400px](images/2_2.png)
+図 2.2
 
 ---
 # 2 Probabilities
@@ -106,10 +102,8 @@ paginate: true
   2. 陽性の場合がんである
      確率は?
 
-<figure>
-<img src="images/2_3.png" width="300px">
-<figcaption>図 2.3 </figcaption>
-</figure>
+![w:400px](images/2_3.png)
+図 2.3
 
 ---
 # 2.1.2 The sum and product rules
@@ -120,10 +114,9 @@ paginate: true
 - $c_i$ : $X=x_i$となった回数
 - $r_j$ : $Y=y_j$となった回数
 - $N$ : 全試行回数
-<figure>
-<img src="images/2_4.png" width="300px">
-<figcaption>図 2.4 </figcaption>
-</figure>
+
+![w:400px](images/2_4.png)
+図 2.4
 
 ---
 # 2.1.2 The sum and product rules
@@ -178,10 +171,8 @@ $$p(X)=\sum_Y{p(X|Y)p(Y)}\tag{2.11}$$
 ---
 # 2.1.3 Bayes' theorem
 
-<figure>
-<img src="images/2_5.png" width="700px">
-<figcaption>図 2.5 </figcaption>
-</figure>
+![w:700px](images/2_5.png)
+図 2.5
 
 ---
 # 2.1.4 Medical screening revisited
