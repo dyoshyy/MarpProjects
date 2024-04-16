@@ -36,6 +36,8 @@ section.slides h1 {
 section.slides h2 {
     font-size: 32pt;
     color: rgb(0, 0, 0);
+    margin: 0;
+    padding: 0;
 }
 
 section.slides ul {
