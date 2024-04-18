@@ -120,7 +120,7 @@ paginate: true
 - $r_j$ : $Y=y_j$となった回数
 - $N$ : 全試行回数
 
-![w:400px](images/2_4.png)
+![w:230px](images/2_4.png)
 図 2.4 確率変数$X$と$Y$とそれぞれの値
 
 ---
@@ -140,6 +140,9 @@ $$ p(X=x_i) = \sum_{j=1}^{M}{p(X=x_i, Y=y_j)} \tag{2.4}$$
 - 周辺確率 (*marginal probability*)とも呼ばれる
 - Yについて足し合わせる(周辺化)ことで得られる
 
+![w:230px](images/2_4.png)
+図 2.4 確率変数$X$と$Y$とそれぞれの値
+
 ---
 # 2.1.2 The sum and product rules
 $X=x_i$のインスタンスのみを考える
@@ -156,6 +159,9 @@ $$\sum_{j=1}^{M}{p(Y=y_j|X=x_i)} = 1 \tag{2.6}$$
 $$ p(X=x_i,Y=y_j) = \frac{n_{ij}}{N} = \frac{n_{ij}}{c_i}\cdot\frac{c_i}{N}$$
 $$ =p(Y=y_i|X=x_i)p(X=x_i)\tag{2.7}$$
 →**確率の積の法則 (*product rule*)**
+
+![w:350px](images/2_4.png)
+図 2.4 確率変数$X$と$Y$とそれぞれの値
 
 ---
 # 2.1.2 The sum and product rules
@@ -258,3 +264,4 @@ $$= \frac{90}{100}\times\frac{1}{100}\times\frac{10,000}{387}=\frac{90}{387} \si
 - 検査結果とがんの有無が独立の場合:
   $$p(C|T) = p(C)$$
   - 検査結果はがんについて何も教えてくれない
+
