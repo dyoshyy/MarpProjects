@@ -140,7 +140,7 @@ $$ p(X=x_i) = \sum_{j=1}^{M}{p(X=x_i, Y=y_j)} \tag{2.4}$$
 - 周辺確率 (*marginal probability*)とも呼ばれる
 - Yについて足し合わせる(周辺化)ことで得られる
 
-![w:230px](images/2_4.png)
+![w:220px](images/2_4.png)
 図 2.4 確率変数$X$と$Y$とそれぞれの値
 
 ---
