@@ -29,33 +29,35 @@ paginate: true
 - 4.2 Decision theory
 ---
 # 4.1.2 Likelihood function
-- 入力変数xと目的変数tの関係をモデル化したい
-- tは決定論的関数y(x,w)と加法性ノイズεによって決まると仮定する:
-$$t = y(x, w) + \epsilon$$
+- 最小二乗法と最尤法の関係をより詳細に議論
+- 目的変数$t$は決定論的関数$y(\mathbf{x},\mathbf{w})$と加法性ノイズ$\epsilon$によって決まると仮定する:
+$$t = y(\mathbf{x},\mathbf{w}) + \epsilon \tag{4.7}$$
+- $\epsilon$は平均0、分散$\sigma^2$のガウス分布に従うと仮定する
+- このとき$t$の条件付き分布は:
+$$p(t|\mathbf{x},\mathbf{w}, \sigma^2) = \mathcal{N}(t|y(\mathbf{x},\mathbf{w}), \sigma^2) \tag{4.8}$$
+
 
 ---
 # 4.1.2 Likelihood function
-- ノイズ項εはゼロ平均、分散σ^2のガウス分布に従うと仮定する
-- これにより、xが与えられた時のtの条件付き分布は:
-$$p(t|x, w, \sigma^2) = \mathcal{N}(t|y(x, w), \sigma^2)$$
 
----
-# 4.1.2 Likelihood function
-
-- 入力とターゲットのペアN個からなるデータセット𝓓 = {x_n, t_n}_{n=1}^Nを考える
-- データ点は独立同一に分布していると仮定する
-- 尤度関数は次のようになる:
-$$p(t|X, w, \sigma^2) = \prod_{n=1}^N \mathcal{N}(t_n|y(x_n, w), \sigma^2)$$
+- 入力$\mathbf{X}=\{\mathrm{x_1, \ldots,x_N}\}$と目的変数$t_1,\ldots,t_N$からなるデータセットを考える
+- (4.8)の分布から独立に得られた点と仮定する
+- 尤度関数は次のようになる($\mathbf{w}$と$\sigma^2$がパラメータ):
+$$p(\textbf{t}|\mathbf{X}, \mathbf{w}, \sigma^2) = \prod_{n=1}^N \mathcal{N}(t_n|\mathbf{w}^T\phi(\mathbf{x}_n), \sigma^2) \tag{4.9}$$
 
 ---
 # 4.1.2 Likelihood function
 - 尤度関数の対数をとると:
 $$\begin{align}
-\ln p(t|X, w, \sigma^2) &= \sum_{n=1}^N \ln \mathcal{N}(t_n|y(x_n, w), \sigma^2)\\
-&= -\frac{N}{2}\ln(2\pi\sigma^2) - \frac{1}{2\sigma^2}\sum_{n=1}^N(t_n - y(x_n, w))^2\\
-&= -\frac{N}{2}\ln(2\pi\sigma^2) - \frac{1}{2\sigma^2}E_D(w)
-\end{align}$$
-- ここで、$E_D(w) = \frac{1}{2}\sum_{n=1}^N(t_n - y(x_n, w))^2$は誤差自乗和関数
+\ln p(t|X, w, \sigma^2) &= \sum_{n=1}^N \ln \mathcal{N}(t_n|\mathbf{w}^T\phi(\mathbf{x}_n), \sigma^2)\\
+&= -\frac{N}{2}\ln(\sigma^2) - \frac{N}{2}\ln(2\pi)- \frac{1}{\sigma^2}E_D(\mathbf{w}) 
+\tag{4.10}\end{align}$$
+$$E_D(\mathbf{w}) = \frac{1}{2}\sum_{n=1}^N\{t_n - \mathbf{w}^T\phi(\mathbf{x}_n)\}^2\tag{4.11}$$
+
+---
+# 4.1.2 Likelihood function
+- (4.10)の最初の2項は$\mathbf{w}$に依存しないため、定数として扱える
+- 二乗和誤差関数(4.11)の最小化に帰着
 
 ---
 # 4.1.3 Maximum likelihood

@@ -42,7 +42,7 @@ section.slides h2 {
 
 section.slides ul {
     padding-top: 1%;
-    padding-left: 5%;
+    padding-left: 4%;
 }
 
 section.slides ol {
@@ -78,5 +78,5 @@ section::after {
 
 /* 数式 */
 .MathJax {
-    font-size: 20pt;
+    font-size: 26pt;
     }
