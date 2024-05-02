@@ -10,7 +10,7 @@ _class: title
 # Deep Learning: Foundations and Concepts 2024
 
 Section: 4.1.2 - 4.2
-2024/4/18 Daiki Yoshikawa
+2024/5/9 Daiki Yoshikawa
 
 ---
 <!--
