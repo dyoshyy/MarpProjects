@@ -29,7 +29,7 @@ paginate: true
 - 4.2 Decision theory
 ---
 # 4.1.2 Likelihood function
-- 最小二乗法と最尤法の関係をより詳細に議論
+- 最小二乗法と最尤推定の関係をより詳細に議論
 - 目的変数$t$は決定論的関数$y(\mathbf{x},\mathbf{w})$と加法性ノイズ$\epsilon$によって決まると仮定する:
 $$t = y(\mathbf{x},\mathbf{w}) + \epsilon \tag{4.7}$$
 - $\epsilon$は平均0、分散$\sigma^2$のガウス分布に従うと仮定する
@@ -47,11 +47,12 @@ $$p(\textbf{t}|\mathbf{X}, \mathbf{w}, \sigma^2) = \prod_{n=1}^N \mathcal{N}(t_n
 
 ---
 # 4.1.2 Likelihood function
-- 尤度関数の対数をとると:
+- 尤度関数の対数をとり、標準形を用いる(2.49)
 $$\begin{align}
 \ln p(t|X, w, \sigma^2) &= \sum_{n=1}^N \ln \mathcal{N}(t_n|\mathbf{w}^T\phi(\mathbf{x}_n), \sigma^2)\\
 &= -\frac{N}{2}\ln(\sigma^2) - \frac{N}{2}\ln(2\pi)- \frac{1}{\sigma^2}E_D(\mathbf{w}) 
 \tag{4.10}\end{align}$$
+- $E_D(\mathbf{w})$は二乗和誤差関数:
 $$E_D(\mathbf{w}) = \frac{1}{2}\sum_{n=1}^N\{t_n - \mathbf{w}^T\phi(\mathbf{x}_n)\}^2\tag{4.11}$$
 
 ---
@@ -61,28 +62,60 @@ $$E_D(\mathbf{w}) = \frac{1}{2}\sum_{n=1}^N\{t_n - \mathbf{w}^T\phi(\mathbf{x}_n
 
 ---
 # 4.1.3 Maximum likelihood
-- 最尤解を求めるには、尤度関数のwに関する対数の勾配を0とおく
-- 勾配を計算すると:
-$$\frac{\partial}{\partial w}\ln p(t|X, w, \sigma^2) = \frac{1}{\sigma^2}\sum_{n=1}^N(t_n - w^T\phi(x_n))\phi(x_n)^T = 0$$
+- 最尤推定を用いてパラメータ$\mathbf{w}$と$\sigma^2$を推定
+- (4.10)の$\mathbf{w}$に沿った勾配を計算すると:
+$$\nabla_{\mathbf{w}}\ln p(t|\mathbf{X}, \mathbf{w}, \sigma^2) = \frac{1}{\sigma^2}\sum_{n=1}^N(t_n - \mathbf{w}^T\phi(\mathbf{x_n}))\phi(\mathbf{x_n})^T\tag{4.12}$$
+- 勾配を0とすると
+$$0=\sum_{n=1}^N{t_n\phi(\mathbf{x_n})^T}- \mathbf{w}^T\left(\sum_{n=1}^N{\phi(\mathbf{x_n})\phi(\mathbf{x_n})^T}\right)\tag{4.13}$$
 
 ---
 # 4.1.3 Maximum likelihood
-- これにより正規方程式が得られる:
-$$\sum_{n=1}^N t_n\phi(x_n)^T = \sum_{n=1}^Nw^T\phi(x_n)\phi(x_n)^T$$  
-- N×M行列Φ(デザイン行列)を定義する。Φ_{nj} = \phi_j(x_n)
-- 解は次のように求まる:
-$$w_{ML} = (\Phi^T\Phi)^{-1}\Phi^Tt$$
-- $\Phi^\dagger = (\Phi^T\Phi)^{-1}\Phi^T$はΦのムーア・ペンローズ疑似逆行列
+- (4.13)を$\mathbf{w}$について解くことで以下を得る
+$$\mathbf{w}_{ML} = \left(\mathbf\Phi^T\mathbf\Phi\right)^{-1}\mathbf\Phi^T\mathbf{t}\tag{4.14}$$
+- 最小二乗問題の正規方程式 (*normal equations* ) とも
+- $\mathbf\Phi$は$N\times M$行列で、計画行列 (*design matrix* )と呼ばれる
+$$
+\mathbf\Phi = \begin{pmatrix}
+\phi_1(\mathbf{x}_1) & \phi_2(\mathbf{x}_1) & \ldots & \phi_M(\mathbf{x}_1) \\
+\phi_1(\mathbf{x}_2) & \phi_2(\mathbf{x}_2) & \ldots & \phi_M(\mathbf{x}_2) \\
+\vdots & \vdots & \ddots & \vdots \\
+\phi_1(\mathbf{x}_N) & \phi_2(\mathbf{x}_N) & \ldots & \phi_M(\mathbf{x}_N) \\
+\end{pmatrix}
+\tag{4.15}
+$$
+---
+# 4.1.3 Maximum likelihood
+- $\mathbf\Phi$のMP疑似逆行列( *Moore-Penrose pseudo-inverse* )
+$$\mathbf\Phi^\dagger \equiv (\mathbf\Phi^T\mathbf\Phi)^{-1}\mathbf\Phi^T\tag{4.16}$$
+- 逆行列の概念を非正方行列に拡張したもの
+- $\mathbf\Phi$が正方かつ逆行列が存在する場合、$\mathbf\Phi^\dagger \equiv \mathbf\Phi^{-1}$
+- バイアスパラメータを明示的に書くと(4.11)は以下のようになる
+$$
+E_D(\mathbf{w}) = \frac{1}{2}\sum_{n=1}^N\{t_n - w_0 - \sum_{j=1}^{M-1}w_j\phi_j(\mathbf{x}_n)\}^2
+\tag{4.17}
+$$
+---
+# 4.1.3 Maximum likelihood
+- (4.17)の$w_0$に関する導関数を0とし、$w_0$について解くと
+$$
+w_0 = \bar{t} - \sum_{j=1}^{M-1}w_j\bar{\phi}_j
+\tag{4.18}
+$$
+ただし、
+$$
+\bar{t} = \frac{1}{N}\sum_{n=1}^Nt_n, \quad \bar{\phi}_j = \frac{1}{N}\sum_{n=1}^N\phi_j(\mathbf{x}_n)
+\tag{4.19}
+$$
+
 
 ---
 # 4.1.3 Maximum likelihood
-- ノイズ分散の最尤推定値は残差分散になる:
-$$\sigma^2_{ML} = \frac{1}{N}\sum_{n=1}^N (t_n - w_{ML}^T\phi(x_n))^2$$
-- つまり、モデルフィッティング後の残差の分散
-
----
-# 4.1.3 Maximum likelihood
-- 幾何学的解釈: 最小二乗解w_{ML}は、ターゲットベクトルtを基底ベクトル{ϕ_j(x)}で張られる部分空間Sに正射影したベクトル
+- 対数尤度関数(4.10)を$\sigma^2$について最大化すると:
+$$
+\sigma^2_{ML} = \frac{1}{N}\sum_{n=1}^N\{t_n - \mathbf{w}_{ML}^T\phi(\mathbf{x}_n)\}^2
+\tag{4.20}
+$$
+- 分散の最尤推定値は、目標変数の残差分散から得られる
 
 ---
 # 4.1.4 Geometry of least squares
