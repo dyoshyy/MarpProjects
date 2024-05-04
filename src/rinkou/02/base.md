@@ -15,7 +15,7 @@ Section: 4.1.2 - 4.2
 ---
 <!--
 class: slides
-footer: 2024/04/18<span style="margin-left:250px;">Deep Learning:Foundations and Concepts 2024</span>
+footer: 2024/04/18<span style="margin-left:250px;">Deep Learning : Foundations and Concepts 2024</span>
 paginate: true
 -->
 # 目次
@@ -183,60 +183,69 @@ $$\mathbf{w}^{(\tau+1)} = \mathbf{w}^{(\tau)} + \eta(t_n - \mathbf{w}^{(\tau)T}\
 
 ---
 # 4.1.6 Regularized least squares
-- 最尤法では、複雑なモデルでデータ数が少ない場合、過学習が起こりがち
 - 正則化によりモデルの複雑さを制御して過学習を防ぐ
-- 誤差関数に正則化項を加える:
-$$E(w) = E_D(w) + \lambda E_W(w)$$  
+- 誤差関数は次の形式 ($\lambda$は正則化係数) :
+$$E(\mathbf{w}) = E_D(\mathbf{w}) + \lambda E_W(\mathbf{w})\tag{4.23}$$  
+- シンプルな例として、重みベクトルの二乗和がある
+$$E_W(\mathbf{w}) = \frac{1}{2}\sum_j w_j^2 = \frac{1}{2}\mathbf{w}^T\mathbf{w}\tag{4.24}$$
 
 ---
 # 4.1.6 Regularized least squares
-- $E_D(w)$はデータ依存の誤差項(例:誤差自乗和)
-- $E_W(w)$は正則化項でモデル複雑さを罰する  
-- $\lambda > 0$で正則化の強さを調整
+- 次のような二乗和誤差関数を考える:
+$$E_D(\mathbf{w}) = \frac{1}{2}\sum_{n=1}^N\{t_n - \mathbf{w}^T\phi(\mathbf{x}_n)\}^2 \tag{4.25}$$
+- 全体の誤差関数は次のようになる:
+$$\frac{1}{2}\sum_{n=1}^N\{t_n - \mathbf{w}^T\phi(\mathbf{x}_n)\}^2 + \frac{\lambda}{2}\mathbf{w}^T\mathbf{w}\tag{4.26}$$
 
 ---
 # 4.1.6 Regularized least squares
-- よく用いられる正則化項はウェイトDecay:
-$$E_W(w) = \frac{1}{2}w^Tw = \frac{1}{2}\sum_j w_j^2$$
-- これにより、重み値はゼロに収束する
-
----
-# 4.1.6 Regularized least squares
-- この正則化項を用いると、誤差関数は:
-$$E(w) = \frac{1}{2}\sum_{n=1}^N(t_n - w^T\phi(x_n))^2 + \frac{\lambda}{2}w^Tw$$
-- wに関して2次形式なので、閉形解が得られる
-
----
-# 4.1.6 Regularized least squares
-- 正則化された解は:
-$$w = (\lambda I + \Phi^T\Phi)^{-1}\Phi^Tt$$
-- これは通常の最小二乗解の拡張形
-- 正則化項により、基底に redundancy があっても行列は特異でない
+$$\frac{1}{2}\sum_{n=1}^N\{t_n - \mathbf{w}^T\phi(\mathbf{x}_n)\}^2 + \frac{\lambda}{2}\mathbf{w}^T\mathbf{w}$$
+- 統計学において、パラメーター縮小推定 ( *parameter shrinkage* ) の一例
+- $\mathbf{w}$の2次関数として、閉形式で解が得られる
+- (4.26)の$\mathbf{w}$に沿った勾配を0にし、$\mathbf{w}$について解くと:
+$$\mathbf{w} = (\lambda I + \mathbf\Phi^T\mathbf\Phi)^{-1}\mathbf\Phi^T\pmb{\mathsf{t}}\tag{4.27}$$
+- 通常の最小二乗解の拡張形
 
 ---
 # 4.1.7 Multiple outputs
 - 今までは目的変数tが1変数の場合を扱った
-- 場合によっては、複数の変数 $\mathbf{t} = (t_1, \ldots, t_K)^T$ を予測したい
+- 複数の変数 $\pmb{\mathsf{t}} = (t_1, \ldots, t_K)^T, K>1$ を予測したい
+- $\pmb{\mathsf{t}}$のそれぞれの成分に異なる基底関数の集合を使うことで実現可能
+  - しかし、より一般的な方法として、全ての目的変数を同じ基底関数でモデル化する
+$$
+\mathbf{y}(\mathbf{x}, \mathbf{w}) = \mathbf{W}^T\phi(\mathbf{x})\tag{4.28}
+$$
+$\mathbf{y}$: K次元列ベクトル　$\mathbf{W}$: $M\times K$ 行列　$\phi(\mathbf{x})$: M次元列ベクトル
+
 
 ---
 # 4.1.7 Multiple outputs
-- 同じ基底関数を使って全ての目的変数をモデル化する:
-$$\mathbf{y}(x, W) = W^T\phi(x)$$
-- $W$は$M\times K$の重み行列
-- 単層の重みをもつニューラルネットワークモデル
+- 単層のニューラルネットワークとして表現できる (図4.4)
+
+<center>
+<img src="images/4_4.png" alt="Figure 4.4: Single-layer neural network representation for multiple outputs" width="800px">
+<br>
+<p style="font-size:20px"> 図4.4: 複数の出力に対する単層ニューラルネットワーク表現
+</p>
+</center>
 
 ---
 # 4.1.7 Multiple outputs
 - 目的変数の条件付き分布として次を仮定する:
-$$p(\mathbf{t}|x, W, \sigma^2) = \mathcal{N}(\mathbf{t}|W^T\phi(x), \sigma^2I)$$
-- ターゲットデータ$T = [\mathbf{t}_1, \ldots, \mathbf{t}_N]^T$に対する対数尤度は:
-$$\ln p(T|X, W, \sigma^2) = -\frac{NK}{2}\ln(2\pi\sigma^2) - \frac{1}{2\sigma^2}\sum_{n=1}^N||\mathbf{t}_n - W^T\phi(x_n)||^2$$
+  $$p(\mathbf{t}|\mathbf{x}, \mathbf{W}, \sigma^2) = \mathcal{N}(\mathbf{t}|\mathbf{W}^T\phi(\mathbf{x}), \sigma^2\mathbf{I})\tag{4.29}$$
+- 観測値$\mathbf{T} = (\mathbf{t}_1, \ldots, \mathbf{t}_N)^T$と入力値$\mathbf{X} = (\mathbf{x}_1, \ldots, \mathbf{x}_N)^T$に対する
+対数尤度は:
+$$\begin{align}
+\ln p(\mathbf{T}|\mathbf{X}, \mathbf{W}, \sigma^2) 
+&= \sum_{n=1}^N{\ln{\mathcal{N}(\mathbf{t}_n|\mathbf{W}^T\phi(\mathbf{x}_n),\sigma^2\mathbf{I})}} \\
+&= -\frac{NK}{2}\ln(2\pi\sigma^2) - \frac{1}{2\sigma^2}\sum_{n=1}^N||\mathbf{t}_n - \mathbf{W}^T\phi(\mathbf{x}_n)||^2 \ \ (4.30)
+\end{align}$$
 
 ---
 # 4.1.7 Multiple outputs
-- $W$について最大化すると解は:
-$$W_{ML} = (\Phi^T\Phi)^{-1}\Phi^TT$$
-- しかしこれは$K$個の別々の回帰問題に分解される
+- $\mathbf{W}$について最大化すると解は:
+$$\mathbf{W}_{ML} = (\mathbf{\Phi}^T\mathbf{\Phi})^{-1}\mathbf{\Phi}^T\mathbf{T}\tag{4.31}$$
+- $t_k$それぞれについて見ると
+$$\mathbf{w}_k = (\mathbf{\Phi}^T\mathbf{\Phi})^{-1}\mathbf{\Phi}^T\pmb{\mathsf{t}}_k=\mathbf{\Phi}^\dagger\pmb{\mathsf{t}}_k\tag{4.32}$$
 
 ---
 # 4.2 Decision theory
