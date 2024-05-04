@@ -43,7 +43,8 @@ $$p(t|\mathbf{x},\mathbf{w}, \sigma^2) = \mathcal{N}(t|y(\mathbf{x},\mathbf{w}),
 - 入力$\mathbf{X}=\{\mathrm{x_1, \ldots,x_N}\}$と目的変数$t_1,\ldots,t_N$からなるデータセットを考える
 - (4.8)の分布から独立に得られた点と仮定する
 - 尤度関数は次のようになる($\mathbf{w}$と$\sigma^2$がパラメータ):
-$$p(\textbf{t}|\mathbf{X}, \mathbf{w}, \sigma^2) = \prod_{n=1}^N \mathcal{N}(t_n|\mathbf{w}^T\phi(\mathbf{x}_n), \sigma^2) \tag{4.9}$$
+$$p(\mathsf{\bf{t}}|\mathbf{X}, \mathbf{w}, \sigma^2) = \prod_{n=1}^N \mathcal{N}(t_n|\mathbf{w}^T\phi(\mathbf{x}_n), \sigma^2) \tag{4.9}$$
+
 
 ---
 # 4.1.2 Likelihood function
@@ -115,81 +116,124 @@ $$
 \sigma^2_{ML} = \frac{1}{N}\sum_{n=1}^N\{t_n - \mathbf{w}_{ML}^T\phi(\mathbf{x}_n)\}^2
 \tag{4.20}
 $$
-- 分散の最尤推定値は、目標変数の残差分散から得られる
+- 分散の最尤推定量は、目標変数の残差分散から得られる
 
 ---
 # 4.1.4 Geometry of least squares
-- 正規方程式の解は一括処理であり、全データセットが必要
-- 大規模データセットの場合、逐次/オンライン法が有用
-- 1データ点ずつ処理し、各観測後にパラメータを更新
+
+- **t** $=(t_1,\ldots,t_N)^T$が各軸となる$N$次元空間を考える
+- 各基底関数$\phi_j(\mathbf{x}_n)$の値は同空間内のベクトルとして$\varphi_j$と表現される
+- $M < N$のとき
+  - $M$個のベクトル$\varphi_j(\mathbf{x}_n)$はM次元の線形部分空間$\mathcal{S}$を張る
+- **y** を$n$番目の要素が$y(\mathbf{x}_n, \mathbf{w})$であるN次元
+ベクトルとする
+  - $\varphi_j$の線形結合として表現可能
+  - 二乗和誤差関数は**y**と**t**のユークリッド距離の
+  二乗に対応
+  - 最小二乗解の$\mathbf{w}$は**y**と**t**の最短距離を与える**y**に対応
+
+![w:350px](images/4_3.png)
+図4.3: 2次元入力空間における
+最小二乗解の幾何学的解釈
 
 ---
 # 4.1.4 Geometry of least squares
+
+感覚的には...
+  - 解は**t**の$\mathcal{S}$への直行射影に対応
+  - **y**の解は$\mathbf{\Phi w}_{ML}$によって与えられる
+    - これが直行射影の形をとっていること
+    からもわかる
+
+- $\mathbf{\Phi}^T\mathbf{\Phi}$が特異に近い場合、直接解法では
+数値的困難が生じる
+
+![w:350px](images/4_3.png)
+図4.3: 2次元入力空間における
+最小二乗解の幾何学的解釈
+
+---
+# 4.1.4 Geometry of least squares
+- $\mathbf{\Phi}^T\mathbf{\Phi}$が特異に近い場合
+  - 特に２つ以上の$\varphi_j$が共線性を持つ場合
+  パラメータの絶対値が大きくなり得る
+  - 実データを扱う場合は珍しくない
+  - SVD (*singular value decomposition*)で解決
+  - 正則化項を足すことで行列が非特異で有ることを保証
+
+
+---
+# 4.1.5 Sequential learning
+- 最尤法(4.14)はデータセット全体を一括に処理する(*batch* 法)
+  - 大規模データの場合、計算コストが高い
+- 逐次 (*sequential* )・オンライン (*online* )学習が有用
+  - 連続的な観測データから予測を行うような実時間アプリケーションにも有効
+  - 確率的勾配降下法 (*stochastic gradient descent* ) が用いられる
+    - *sequential gradient descent* とも呼ばれる
+
+---
+# 4.1.5 Sequential learning
+
 - 確率的勾配降下法を用いて誤差関数を最適化
-- 誤差関数E = Σ_nE_nのとき、パラメータ更新式は:  
-$$w^{(\tau+1)} = w^{(\tau)} - \eta \nabla E_n(w^{(\tau)})$$
-- ここで、ηは学習率
+- 誤差関数が$E = \sum_{n}E_n$のとき、更新式は:
+$$\mathbf{w}^{(\tau+1)} = \mathbf{w}^{(\tau)} - \eta \nabla E_n\tag{4.21}$$
+- $\tau$はイテレーション番号、$\eta$は学習率
+- 二乗和誤差関数 (4.11)の場合:
+$$\mathbf{w}^{(\tau+1)} = \mathbf{w}^{(\tau)} + \eta(t_n - \mathbf{w}^{(\tau)T}\phi_n)\phi_n\tag{4.22}$$
 
 ---
-# 4.1.4 Geometry of least squares
-- 線形回帰モデルでは:
-$$w^{(\tau+1)} = w^{(\tau)} + \eta(t_n - w^{(\tau)T}\phi_n)\phi_n$$
-- 最小平均二乗(LMS)アルゴリズムと呼ばれる
-- 観測を逐次処理し、パラメータを徐々に更新
-
----
-# 4.1.5 Regularized least squares
+# 4.1.6 Regularized least squares
 - 最尤法では、複雑なモデルでデータ数が少ない場合、過学習が起こりがち
 - 正則化によりモデルの複雑さを制御して過学習を防ぐ
 - 誤差関数に正則化項を加える:
 $$E(w) = E_D(w) + \lambda E_W(w)$$  
 
 ---
-# 4.1.5 Regularized least squares
+# 4.1.6 Regularized least squares
 - $E_D(w)$はデータ依存の誤差項(例:誤差自乗和)
 - $E_W(w)$は正則化項でモデル複雑さを罰する  
 - $\lambda > 0$で正則化の強さを調整
 
 ---
-# 4.1.5 Regularized least squares
+# 4.1.6 Regularized least squares
 - よく用いられる正則化項はウェイトDecay:
 $$E_W(w) = \frac{1}{2}w^Tw = \frac{1}{2}\sum_j w_j^2$$
 - これにより、重み値はゼロに収束する
 
 ---
-# 4.1.5 Regularized least squares
+# 4.1.6 Regularized least squares
 - この正則化項を用いると、誤差関数は:
 $$E(w) = \frac{1}{2}\sum_{n=1}^N(t_n - w^T\phi(x_n))^2 + \frac{\lambda}{2}w^Tw$$
 - wに関して2次形式なので、閉形解が得られる
 
 ---
-# 4.1.5 Regularized least squares
+# 4.1.6 Regularized least squares
 - 正則化された解は:
 $$w = (\lambda I + \Phi^T\Phi)^{-1}\Phi^Tt$$
 - これは通常の最小二乗解の拡張形
 - 正則化項により、基底に redundancy があっても行列は特異でない
 
 ---
-# 4.1.6 Multiple outputs
+# 4.1.7 Multiple outputs
 - 今までは目的変数tが1変数の場合を扱った
 - 場合によっては、複数の変数 $\mathbf{t} = (t_1, \ldots, t_K)^T$ を予測したい
 
 ---
-# 4.1.6 Multiple outputs
+# 4.1.7 Multiple outputs
 - 同じ基底関数を使って全ての目的変数をモデル化する:
 $$\mathbf{y}(x, W) = W^T\phi(x)$$
 - $W$は$M\times K$の重み行列
 - 単層の重みをもつニューラルネットワークモデル
 
 ---
-# 4.1.6 Multiple outputs
+# 4.1.7 Multiple outputs
 - 目的変数の条件付き分布として次を仮定する:
 $$p(\mathbf{t}|x, W, \sigma^2) = \mathcal{N}(\mathbf{t}|W^T\phi(x), \sigma^2I)$$
 - ターゲットデータ$T = [\mathbf{t}_1, \ldots, \mathbf{t}_N]^T$に対する対数尤度は:
 $$\ln p(T|X, W, \sigma^2) = -\frac{NK}{2}\ln(2\pi\sigma^2) - \frac{1}{2\sigma^2}\sum_{n=1}^N||\mathbf{t}_n - W^T\phi(x_n)||^2$$
 
 ---
-# 4.1.6 Multiple outputs
+# 4.1.7 Multiple outputs
 - $W$について最大化すると解は:
 $$W_{ML} = (\Phi^T\Phi)^{-1}\Phi^TT$$
 - しかしこれは$K$個の別々の回帰問題に分解される
