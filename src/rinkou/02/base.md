@@ -41,16 +41,17 @@ $$p(t|\mathbf{x},\mathbf{w}, \sigma^2) = \mathcal{N}(t|y(\mathbf{x},\mathbf{w}),
 # 4.1.2 Likelihood function
 
 - 入力$\mathbf{X}=\{\mathrm{x_1, \ldots,x_N}\}$と目的変数$t_1,\ldots,t_N$からなるデータセットを考える
+  - $\{t_n\}$を列ベクトルにまとめたものを$\pmb{\mathsf{t}}$とする
 - (4.8)の分布から独立に得られた点と仮定する
 - 尤度関数は次のようになる($\mathbf{w}$と$\sigma^2$がパラメータ):
-$$p(\mathsf{\bf{t}}|\mathbf{X}, \mathbf{w}, \sigma^2) = \prod_{n=1}^N \mathcal{N}(t_n|\mathbf{w}^T\phi(\mathbf{x}_n), \sigma^2) \tag{4.9}$$
+$$p(\pmb{\mathsf{t}}|\mathbf{X}, \mathbf{w}, \sigma^2) = \prod_{n=1}^N \mathcal{N}(t_n|\mathbf{w}^T\phi(\mathbf{x}_n), \sigma^2) \tag{4.9}$$
 
 
 ---
 # 4.1.2 Likelihood function
 - 尤度関数の対数をとり、標準形を用いる(2.49)
 $$\begin{align}
-\ln p(t|X, w, \sigma^2) &= \sum_{n=1}^N \ln \mathcal{N}(t_n|\mathbf{w}^T\phi(\mathbf{x}_n), \sigma^2)\\
+\ln p(\pmb{\mathsf{t}}|X, \mathbf{w}, \sigma^2) &= \sum_{n=1}^N \ln \mathcal{N}(t_n|\mathbf{w}^T\phi(\mathbf{x}_n), \sigma^2)\\
 &= -\frac{N}{2}\ln(\sigma^2) - \frac{N}{2}\ln(2\pi)- \frac{1}{\sigma^2}E_D(\mathbf{w}) 
 \tag{4.10}\end{align}$$
 - $E_D(\mathbf{w})$は二乗和誤差関数:
@@ -58,29 +59,33 @@ $$E_D(\mathbf{w}) = \frac{1}{2}\sum_{n=1}^N\{t_n - \mathbf{w}^T\phi(\mathbf{x}_n
 
 ---
 # 4.1.2 Likelihood function
-- (4.10)の最初の2項は$\mathbf{w}$に依存しないため、定数として扱える
-- 二乗和誤差関数(4.11)の最小化に帰着
+$$\begin{align}
+\ln p(\pmb{\mathsf{t}}|X, \mathbf{w}, \sigma^2)
+&= -\frac{N}{2}\ln(\sigma^2) - \frac{N}{2}\ln(2\pi)- \frac{1}{\sigma^2}E_D(\mathbf{w}) 
+\end{align}$$
+- 最初の2項は$\mathbf{w}$に依存しないため、定数として扱える
+- 尤度関数を最大化することは二乗和誤差関数(4.11)の最小化と等価
 
 ---
 # 4.1.3 Maximum likelihood
 - 最尤推定を用いてパラメータ$\mathbf{w}$と$\sigma^2$を推定
 - (4.10)の$\mathbf{w}$に沿った勾配を計算すると:
-$$\nabla_{\mathbf{w}}\ln p(t|\mathbf{X}, \mathbf{w}, \sigma^2) = \frac{1}{\sigma^2}\sum_{n=1}^N(t_n - \mathbf{w}^T\phi(\mathbf{x_n}))\phi(\mathbf{x_n})^T\tag{4.12}$$
+$$\nabla_{\mathbf{w}}\ln p(\pmb{\mathsf{t}}|\mathbf{X}, \mathbf{w}, \sigma^2) = \frac{1}{\sigma^2}\sum_{n=1}^N(t_n - \mathbf{w}^T\phi(\mathbf{x_n}))\phi(\mathbf{x_n})^T\tag{4.12}$$
 - 勾配を0とすると
 $$0=\sum_{n=1}^N{t_n\phi(\mathbf{x_n})^T}- \mathbf{w}^T\left(\sum_{n=1}^N{\phi(\mathbf{x_n})\phi(\mathbf{x_n})^T}\right)\tag{4.13}$$
 
 ---
 # 4.1.3 Maximum likelihood
 - (4.13)を$\mathbf{w}$について解くことで以下を得る
-$$\mathbf{w}_{ML} = \left(\mathbf\Phi^T\mathbf\Phi\right)^{-1}\mathbf\Phi^T\mathbf{t}\tag{4.14}$$
-- 最小二乗問題の正規方程式 (*normal equations* ) とも
+$$\mathbf{w}_{ML} = \left(\mathbf\Phi^T\mathbf\Phi\right)^{-1}\mathbf\Phi^T\pmb{\mathsf{t}}\tag{4.14}$$
+- 最小二乗問題の正規方程式 (*normal equations* ) とも呼ばれる
 - $\mathbf\Phi$は$N\times M$行列で、計画行列 (*design matrix* )と呼ばれる
 $$
 \mathbf\Phi = \begin{pmatrix}
-\phi_1(\mathbf{x}_1) & \phi_2(\mathbf{x}_1) & \ldots & \phi_M(\mathbf{x}_1) \\
-\phi_1(\mathbf{x}_2) & \phi_2(\mathbf{x}_2) & \ldots & \phi_M(\mathbf{x}_2) \\
+\phi_0(\mathbf{x}_1) & \phi_1(\mathbf{x}_1) & \ldots & \phi_{M-1}(\mathbf{x}_1) \\
+\phi_0(\mathbf{x}_2) & \phi_1(\mathbf{x}_2) & \ldots & \phi_{M-1}(\mathbf{x}_2) \\
 \vdots & \vdots & \ddots & \vdots \\
-\phi_1(\mathbf{x}_N) & \phi_2(\mathbf{x}_N) & \ldots & \phi_M(\mathbf{x}_N) \\
+\phi_0(\mathbf{x}_N) & \phi_1(\mathbf{x}_N) & \ldots & \phi_{M-1}(\mathbf{x}_N) \\
 \end{pmatrix}
 \tag{4.15}
 $$
@@ -90,19 +95,19 @@ $$
 $$\mathbf\Phi^\dagger \equiv (\mathbf\Phi^T\mathbf\Phi)^{-1}\mathbf\Phi^T\tag{4.16}$$
 - 逆行列の概念を非正方行列に拡張したもの
 - $\mathbf\Phi$が正方かつ逆行列が存在する場合、$\mathbf\Phi^\dagger \equiv \mathbf\Phi^{-1}$
+
+---
+# 4.1.3 Maximum likelihood
 - バイアスパラメータを明示的に書くと(4.11)は以下のようになる
 $$
 E_D(\mathbf{w}) = \frac{1}{2}\sum_{n=1}^N\{t_n - w_0 - \sum_{j=1}^{M-1}w_j\phi_j(\mathbf{x}_n)\}^2
 \tag{4.17}
 $$
----
-# 4.1.3 Maximum likelihood
 - (4.17)の$w_0$に関する導関数を0とし、$w_0$について解くと
 $$
 w_0 = \bar{t} - \sum_{j=1}^{M-1}w_j\bar{\phi}_j
 \tag{4.18}
 $$
-ただし、
 $$
 \bar{t} = \frac{1}{N}\sum_{n=1}^Nt_n, \quad \bar{\phi}_j = \frac{1}{N}\sum_{n=1}^N\phi_j(\mathbf{x}_n)
 \tag{4.19}
@@ -125,16 +130,14 @@ $$
 - 各基底関数$\phi_j(\mathbf{x}_n)$の値は同空間内のベクトルとして$\varphi_j$と表現される
 - $M < N$のとき
   - $M$個のベクトル$\varphi_j(\mathbf{x}_n)$はM次元の線形部分空間$\mathcal{S}$を張る
-- **y** を$n$番目の要素が$y(\mathbf{x}_n, \mathbf{w})$であるN次元
-ベクトルとする
+- **y** を$n$番目の要素が$y(\mathbf{x}_n, \mathbf{w})$であるN次元ベクトルとする
   - $\varphi_j$の線形結合として表現可能
-  - 二乗和誤差関数は**y**と**t**のユークリッド距離の
-  二乗に対応
+  - 二乗和誤差関数は**y**と**t**のユークリッド距離の二乗に対応
   - 最小二乗解の$\mathbf{w}$は**y**と**t**の最短距離を与える**y**に対応
 
-![w:350px](images/4_3.png)
+<!-- ![w:350px](images/4_3.png)
 図4.3: 2次元入力空間における
-最小二乗解の幾何学的解釈
+最小二乗解の幾何学的解釈 -->
 
 ---
 # 4.1.4 Geometry of least squares
@@ -148,14 +151,14 @@ $$
 - $\mathbf{\Phi}^T\mathbf{\Phi}$が特異に近い場合、直接解法では
 数値的困難が生じる
 
-![w:350px](images/4_3.png)
+![w:400px](images/4_3.png)
 図4.3: 2次元入力空間における
 最小二乗解の幾何学的解釈
 
 ---
 # 4.1.4 Geometry of least squares
 - $\mathbf{\Phi}^T\mathbf{\Phi}$が特異に近い場合
-  - 特に２つ以上の$\varphi_j$が共線性を持つ場合
+  - 特に２つ以上の$\varphi_j$が共線性またはそれに近い場合
   パラメータの絶対値が大きくなり得る
   - 実データを扱う場合は珍しくない
   - SVD (*singular value decomposition*)で解決
@@ -180,6 +183,7 @@ $$\mathbf{w}^{(\tau+1)} = \mathbf{w}^{(\tau)} - \eta \nabla E_n\tag{4.21}$$
 - $\tau$はイテレーション番号、$\eta$は学習率
 - 二乗和誤差関数 (4.11)の場合:
 $$\mathbf{w}^{(\tau+1)} = \mathbf{w}^{(\tau)} + \eta(t_n - \mathbf{w}^{(\tau)T}\phi_n)\phi_n\tag{4.22}$$
+- $\phi_n=\phi(\mathbf{x}_n)$であり、LMS (*least mean squares, LMS* )アルゴリズムとして知られる 
 
 ---
 # 4.1.6 Regularized least squares
@@ -210,7 +214,7 @@ $$\mathbf{w} = (\lambda I + \mathbf\Phi^T\mathbf\Phi)^{-1}\mathbf\Phi^T\pmb{\mat
 - 今までは目的変数tが1変数の場合を扱った
 - 複数の変数 $\pmb{\mathsf{t}} = (t_1, \ldots, t_K)^T, K>1$ を予測したい
 - $\pmb{\mathsf{t}}$のそれぞれの成分に異なる基底関数の集合を使うことで実現可能
-  - しかし、より一般的な方法として、全ての目的変数を同じ基底関数でモデル化する
+  - より一般的な方法として、全ての目的変数を同じ基底関数でモデル化する
 $$
 \mathbf{y}(\mathbf{x}, \mathbf{w}) = \mathbf{W}^T\phi(\mathbf{x})\tag{4.28}
 $$
