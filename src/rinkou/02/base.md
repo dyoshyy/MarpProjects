@@ -249,36 +249,69 @@ $$\mathbf{w}_k = (\mathbf{\Phi}^T\mathbf{\Phi})^{-1}\mathbf{\Phi}^T\pmb{\mathsf{
 
 ---
 # 4.2 Decision theory
-- 条件付き分布$p(t|x)$を使って最適な予測$f(x)$を行いたい
-- 期待損失$\mathbb{E}[L] = \int\int L(t, f(x))p(x,t)dxdt$を最小化する必要がある
+- 予測分布 ( *predictive distribution* ) を考える
+$$
+p(t|\mathbf{x}, \mathbf{w}_{\text{ML}}, \sigma^2_{\text{ML}}) =
+\mathcal{N}(t|y(\mathbf{x}, \mathbf{w}_{\text{ML}}), \sigma^2_{\text{ML}})\tag{4.33}
+$$
+- 実際には、分布ではなく値を使いたい
+  - 例) 腫瘍の治療のための放射線量を予測する場合、予測分布から特定の線量を決定する必要がある
+- 推論 ( *inference* ) 段階:
+  - 訓練データから予測分布$p(t|\mathbf{x})$を計算
+- 決定 ( *decision* ) 段階:
+  - 予測分布から特定の値$f(\mathbf{x})$を計算
 
 ---
 # 4.2 Decision theory
-- 二乗損失$L(t, f(x)) = \{f(x) - t\}^2$の場合:
-$$f^*(x) = \mathop{\mathrm{arg\,min}}\limits_f \mathbb{E}[L] = \mathbb{E}[t|x] = \int tp(t|x)dt$$
-- つまり、最適な予測器は$t$の条件付き平均値
+- 予測分布 $p(t|\mathbf{x})$ と $f$ の両方に依存する損失関数 ( *loss function* ) を最小化
+- 直感的には、平均を選べば$f(\mathbf{x})=y(\mathbf{x},\mathbf{w}_{\text{ML}})$
+  - 場合によっては非常に悪い予測になってしまうことも
+  - どのような場合にどのような仮定のもとで適用するかを理解することが重要
+    - 決定理論 (*decision theory* )によって形式化
 
 ---
 # 4.2 Decision theory
-- 別の導出法:二乗損失を次のように展開する
-$$\{f(x) - t\}^2 = \{f(x) - \mathbb{E}[t|x]\}^2 + 2\{f(x) - \mathbb{E}[t|x]\}\{\mathbb{E}[t|x] - t\} + \{\mathbb{E}[t|x] - t\}^2$$
+- 損失関数 $L(t, f(\mathbf{x}))$ によって予測の良し悪しを評価
+- 真値$t$はわからないので、代わりに平均損失を最小化
+$$
+\mathbb{E}[L] = \int\int L(t, f(\mathbf{x}))p(\mathbf{x}, t)d\mathbf{x}dt\tag{4.34}
+$$
+- 二乗損失 $L(t,f(\mathbf{x})={f(\mathbf{x})-t}^2)$を用いると
+$$
+\mathbb{E}[L] = \int\int \{f(\mathbf{x}) - t\}^2p(\mathbf{x}, t)d\mathbf{x}dt\tag{4.35}
+$$
+- 二乗損失と二乗和誤差関数を混同しないように注意
 
 ---
 # 4.2 Decision theory
-- $t$について積分すると交差項はゼロになり:
-$$\mathbb{E}[L] = \int \{f(x) - \mathbb{E}[t|x]\}^2p(x)dx + \int \mathrm{var}[t|x]p(x)dx$$
+- 目標は$\mathbb{E}[L]$を最小にする$f(\mathbf{x})$を見つけること
+- $f(\mathbf{x})$を完全に柔軟な関数と仮定すると、変分法を用いることができる
+$$
+\frac{\delta\mathbb{E}[L]}{\delta f(\mathbf{x})}
+= 2\int\{f(\mathbf{x}) - t\}p(t|\mathbf{x})dt = 0\tag{4.36}
+$$
+- $f(\mathbf{x})$について解いて和と積の法則を用いると:
+$$
+f^*(\mathbf{x}) = \frac{1}{p(\mathbf{x})}\int tp(\mathbf{x},t)dt = \int tp(t|\mathbf{x})dt= \mathbb{E}[t|\mathbf{x}]\tag{4.37}
+$$
 
 ---
 # 4.2 Decision theory
-- 第1項のみが$f(x)$に依存し、$f(x) = \mathbb{E}[t|x]$のとき最小化される
-- 第2項はxに関するtの分散の平均値で、不可逆的なノイズ
+- 回帰関数 ( *regression function* )
+  - $\mathbf{x}$で条件づけした$t$の平均値
+  - 多次元の出力にも拡張可能
+  
+![w:500px](images/4_5.png)
+図4.5: 二乗損失を最小にする回帰関数
+
 
 ---
 # 4.2 Decision theory
-- 二乗損失以外の損失関数も考えられる
-- 一般化したMinkowski損失:
-$$\mathbb{E}[L_q] = \int\int |f(x) - t|^qp(x,t)dxdt$$
-- $q=2$のとき通常の二乗損失
+- (4.8)の条件付き分布の場合、条件付き平均は
+$$
+\mathbb{E}[t|\mathbf{x}] = \int tp(t|\mathbf{x})dt = y(\mathbf{x}, \mathbf{w}) \tag{4.38}
+$$
+
 
 ---
 # 4.2 Decision theory
