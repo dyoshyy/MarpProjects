@@ -59,6 +59,18 @@ p:has(img) {
     right: 3%;
 }
 
+section.image_center p:has(img){
+    position: absolute;
+    bottom: 6%;
+    right: 10%;
+    left: 10%;
+    text-align: center;
+}
+
+section.image_center .MathJax {
+    font-size: 24px;
+}
+
 /* フッター */
 footer {
     position: absolute;

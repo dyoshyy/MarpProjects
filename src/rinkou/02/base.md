@@ -300,37 +300,64 @@ $$
 - 回帰関数 ( *regression function* )
   - $\mathbf{x}$で条件づけした$t$の平均値
   - 多次元の出力にも拡張可能
-  
+  - (4.8)の場合、条件付き平均は
+
+$\ \ \ \ \mathbb{E}[t|\mathbf{x}] = \int tp(t|\mathbf{x})dt = y(\mathbf{x}, \mathbf{w}) \ \ \ (4.38)
+$
+
 ![w:500px](images/4_5.png)
 図4.5: 二乗損失を最小にする回帰関数
 
-
 ---
 # 4.2 Decision theory
-- (4.8)の条件付き分布の場合、条件付き平均は
+- 別の方法で同じ結果を導く
+- 最適解が条件付き期待値であるという知識を用いると次のように展開できる
 $$
-\mathbb{E}[t|\mathbf{x}] = \int tp(t|\mathbf{x})dt = y(\mathbf{x}, \mathbf{w}) \tag{4.38}
+\begin{align}
+&\{f(\mathbf{x})-t\}^2 = \{f(\mathbf{x})-\mathbb{E}[t|\mathbf{x}]+\mathbb{E}[t|\mathbf{x}]-t\}^2 \\
+&= \{f(\mathbf{x})-\mathbb{E}[t|\mathbf{x}]\}^2 + 2\{f(\mathbf{x})-\mathbb{E}[t|\mathbf{x}]\}\{\mathbb{E}[t|\mathbf{x}]-t\} + \{\mathbb{E}[t|\mathbf{x}]-t\}^2
+\end{align}
+$$
+- 損失関数(4.35)に代入し、tについて積分すると以下を得る
+$$
+\mathbb{E}[L] = \int\{f(\mathbf{x})-\mathbb{E}[t|\mathbf{x}]\}^2p(\mathbf{x})d\mathbf{x} + \int \text{var}[t|\mathbf{x}]p(\mathbf{x})d\mathbf{x}\tag{4.39}
 $$
 
+---
+# 4.2 Decision theory
+$$
+\mathbb{E}[L] = \int\{f(\mathbf{x})-\mathbb{E}[t|\mathbf{x}]\}^2p(\mathbf{x})d\mathbf{x} + \int \text{var}[t|\mathbf{x}]p(\mathbf{x})d\mathbf{x}
+$$
+- 第一項は$f(\mathbf{x})=\mathbb{E}[t|\mathbf{x}]$のとき最小かつ0となり、これは条件付き平均値
+- 第二項は$\mathbf{x}$上で平均化された$t$の分散であり、ノイズとみなすことができる
+  - $f(\mathbf{x})$について独立なため、第二項が損失の最小値
+
 
 ---
 # 4.2 Decision theory
-- $\mathbb{E}[L_q]$の最小値は:
-    - $q=2$のとき条件付き平均値
-    - $q=1$のとき条件付き中央値
-    - $q\rightarrow 0$のとき条件付きモード値
+- 二乗損失を一般化した損失を考える
+- ミンコフスキー (*Minkowski* )損失の期待値
+$$
+\mathbb{E}[L_q] = \int\int |f(\mathbf{x})-t|^q p(\mathbf{x}, t)d\mathbf{x}dt\tag{4.40}
+$$
+- $\mathbb{E}[L_q]$の最小値
+  - $q=2$のとき、条件付き平均
+  - $q=1$のとき、条件付き中央値
+  - $q\rightarrow0$のとき、条件付きモード
+
+
+---
+<!--
+_class: image_center
+-->
+# 4.2 Decision theory
+![w:700px](images/4_6.png)
+図4.6: $L_q=|f-t|^q$のプロット
 
 ---
 # 4.2 Decision theory
-- これまでは基底関数の形と数が与えられていた前提
-- 最尤法では、データ数が少ない場合、過学習が起こりやすい
-- 基底関数の数を減らすと過学習は抑えられるが、モデルの自由度が下がる
-
----
-# 4.2 Decision theory
-- 正則化は過学習を制御できるが、正則化係数$\lambda$の決め方が問題
-- 適切な$\lambda$を選ぶために、バイアス・分散トレードオフを理解する必要がある
-
----
-# 4.2 Decision theory
-- バイアス・分散トレードオフについては次章で詳しく説明する
+- ガウスノイズの仮定は$t$の条件付き分布が単峰性を持つことを意味
+  - 二乗損失では悪い結果になってしまう場合がある
+  - 混合ガウスを用いて拡張可能
+    - 逆問題 (*inverse problem* ) で用いられる
+- 次章では分類問題に対する同様の概念を議論する
