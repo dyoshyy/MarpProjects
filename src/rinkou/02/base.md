@@ -15,7 +15,7 @@ Section: 4.1.2 - 4.2
 ---
 <!--
 class: slides
-footer: 2024/04/18<span style="margin-left:250px;">Deep Learning : Foundations and Concepts 2024</span>
+footer: 2024/05/09<span style="margin-left:250px;">Deep Learning : Foundations and Concepts 2024</span>
 paginate: true
 -->
 # 目次
