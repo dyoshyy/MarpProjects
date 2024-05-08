@@ -91,7 +91,7 @@ $$
 $$
 ---
 # 4.1.3 Maximum likelihood
-- $\mathbf\Phi$のMP疑似逆行列( *Moore-Penrose pseudo-inverse* )
+- $\mathbf\Phi$のMP疑似逆行列 (*Moore-Penrose pseudo-inverse*)
 $$\mathbf\Phi^\dagger \equiv (\mathbf\Phi^T\mathbf\Phi)^{-1}\mathbf\Phi^T\tag{4.16}$$
 - 逆行列の概念を非正方行列に拡張したもの
 - $\mathbf\Phi$が正方かつ逆行列が存在する場合、$\mathbf\Phi^\dagger \equiv \mathbf\Phi^{-1}$
@@ -128,6 +128,7 @@ $$
 
 - **t** $=(t_1,\ldots,t_N)^T$が各軸となる$N$次元空間を考える
 - 各基底関数$\phi_j(\mathbf{x}_n)$の値は同空間内のベクトルとして$\varphi_j$と表現される
+  - $\varphi_j$は計画行列$\mathbf\Phi$のj番目の列ベクトルであることに注意
 - $M < N$のとき
   - $M$個のベクトル$\varphi_j(\mathbf{x}_n)$はM次元の線形部分空間$\mathcal{S}$を張る
 - **y** を$n$番目の要素が$y(\mathbf{x}_n, \mathbf{w})$であるN次元ベクトルとする
@@ -143,9 +144,9 @@ $$
 # 4.1.4 Geometry of least squares
 
 感覚的には...
-  - 解は**t**の$\mathcal{S}$への直行射影に対応
+  - 解は**t**の$\mathcal{S}$への直交射影に対応
   - **y**の解は$\mathbf{\Phi w}_{ML}$によって与えられる
-    - これが直行射影の形をとっていること
+    - これが直交射影の形をとっていること
     からもわかる
 
 - $\mathbf{\Phi}^T\mathbf{\Phi}$が特異に近い場合、直接解法では
@@ -167,12 +168,12 @@ $$
 
 ---
 # 4.1.5 Sequential learning
-- 最尤法(4.14)はデータセット全体を一括に処理する(*batch* 法)
+- 最尤法(4.14)はデータセット全体を一括に処理する (*batch*法)
   - 大規模データの場合、計算コストが高い
-- 逐次 (*sequential* )・オンライン (*online* )学習が有用
+- 逐次 (*sequential*)・オンライン (*online*)学習が有用
   - 連続的な観測データから予測を行うような実時間アプリケーションにも有効
-  - 確率的勾配降下法 (*stochastic gradient descent* ) が用いられる
-    - *sequential gradient descent* とも呼ばれる
+  - 確率的勾配降下法 (*stochastic gradient descent*)が用いられる
+    - *sequential gradient descent*とも呼ばれる
 
 ---
 # 4.1.5 Sequential learning
@@ -183,7 +184,7 @@ $$\mathbf{w}^{(\tau+1)} = \mathbf{w}^{(\tau)} - \eta \nabla E_n\tag{4.21}$$
 - $\tau$はイテレーション番号、$\eta$は学習率
 - 二乗和誤差関数 (4.11)の場合:
 $$\mathbf{w}^{(\tau+1)} = \mathbf{w}^{(\tau)} + \eta(t_n - \mathbf{w}^{(\tau)T}\phi_n)\phi_n\tag{4.22}$$
-- $\phi_n=\phi(\mathbf{x}_n)$であり、LMS (*least mean squares, LMS* )アルゴリズムとして知られる 
+- $\phi_n=\phi(\mathbf{x}_n)$であり、LMS (*least mean squares*)アルゴリズムとして知られる 
 
 ---
 # 4.1.6 Regularized least squares
@@ -203,7 +204,7 @@ $$\frac{1}{2}\sum_{n=1}^N\{t_n - \mathbf{w}^T\phi(\mathbf{x}_n)\}^2 + \frac{\lam
 ---
 # 4.1.6 Regularized least squares
 $$\frac{1}{2}\sum_{n=1}^N\{t_n - \mathbf{w}^T\phi(\mathbf{x}_n)\}^2 + \frac{\lambda}{2}\mathbf{w}^T\mathbf{w}$$
-- 統計学において、パラメーター縮小推定 ( *parameter shrinkage* ) の一例
+- 統計学において、パラメーター縮小推定 (*parameter shrinkage*)の一例
 - $\mathbf{w}$の2次関数として、閉形式で解が得られる
 - (4.26)の$\mathbf{w}$に沿った勾配を0にし、$\mathbf{w}$について解くと:
 $$\mathbf{w} = (\lambda I + \mathbf\Phi^T\mathbf\Phi)^{-1}\mathbf\Phi^T\pmb{\mathsf{t}}\tag{4.27}$$
@@ -253,25 +254,25 @@ $$\mathbf{w}_k = (\mathbf{\Phi}^T\mathbf{\Phi})^{-1}\mathbf{\Phi}^T\pmb{\mathsf{
 
 ---
 # 4.2 Decision theory
-- 予測分布 ( *predictive distribution* ) を考える
+- 予測分布 (*predictive distribution*)を考える
 $$
 p(t|\mathbf{x}, \mathbf{w}_{\text{ML}}, \sigma^2_{\text{ML}}) =
 \mathcal{N}(t|y(\mathbf{x}, \mathbf{w}_{\text{ML}}), \sigma^2_{\text{ML}})\tag{4.33}
 $$
 - 実際には、分布ではなく値を使いたい
   - 例) 腫瘍の治療のための放射線量を予測する場合、予測分布から特定の線量を決定する必要がある
-- 推論 ( *inference* ) 段階:
+- 推論 (*inference*)段階:
   - 訓練データから予測分布$p(t|\mathbf{x})$を計算
-- 決定 ( *decision* ) 段階:
+- 決定 (*decision*)段階:
   - 予測分布から特定の値$f(\mathbf{x})$を計算
 
 ---
 # 4.2 Decision theory
-- 予測分布 $p(t|\mathbf{x})$ と $f$ の両方に依存する損失関数 ( *loss function* ) を最小化
+- 予測分布 $p(t|\mathbf{x})$ と $f$ の両方に依存する損失関数 (*loss function*)を最小化
 - 直感的には、平均を選べば$f(\mathbf{x})=y(\mathbf{x},\mathbf{w}_{\text{ML}})$
   - 場合によっては非常に悪い予測になってしまうことも
   - どのような場合にどのような仮定のもとで適用するかを理解することが重要
-    - 決定理論 (*decision theory* )によって形式化
+    - 決定理論 (*decision theory*)によって形式化
 
 ---
 # 4.2 Decision theory
@@ -280,7 +281,7 @@ $$
 $$
 \mathbb{E}[L] = \int\int L(t, f(\mathbf{x}))p(\mathbf{x}, t)d\mathbf{x}dt\tag{4.34}
 $$
-- 二乗損失 $L(t,f(\mathbf{x})={f(\mathbf{x})-t}^2)$を用いると
+- 二乗損失 $L(t,f(\mathbf{x}))=\{f(\mathbf{x})-t\}^2$を用いると
 $$
 \mathbb{E}[L] = \int\int \{f(\mathbf{x}) - t\}^2p(\mathbf{x}, t)d\mathbf{x}dt\tag{4.35}
 $$
@@ -301,7 +302,7 @@ $$
 
 ---
 # 4.2 Decision theory
-- 回帰関数 ( *regression function* )
+- 回帰関数 (*regression function*)
   - $\mathbf{x}$で条件づけした$t$の平均値
   - 多次元の出力にも拡張可能
   - (4.8)の場合、条件付き平均は
@@ -340,7 +341,7 @@ $$
 ---
 # 4.2 Decision theory
 - 二乗損失を一般化した損失を考える
-- ミンコフスキー (*Minkowski* )損失の期待値
+- ミンコフスキー (*Minkowski*)損失の期待値
 $$
 \mathbb{E}[L_q] = \int\int |f(\mathbf{x})-t|^q p(\mathbf{x}, t)d\mathbf{x}dt\tag{4.40}
 $$
@@ -363,5 +364,5 @@ _class: image_center
 - ガウスノイズの仮定は$t$の条件付き分布が単峰性を持つことを意味
   - 二乗損失では悪い結果になってしまう場合がある
   - 混合ガウスを用いて拡張可能
-    - 逆問題 (*inverse problem* ) で用いられる
+    - 逆問題 (*inverse problem*)で用いられる
 - 次章では分類問題に対する同様の概念を議論する
