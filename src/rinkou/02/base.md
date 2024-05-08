@@ -269,7 +269,7 @@ $$
 ---
 # 4.2 Decision theory
 - 予測分布 $p(t|\mathbf{x})$ と $f$ の両方に依存する損失関数 (*loss function*)を最小化
-- 直感的には、平均を選べば$f(\mathbf{x})=y(\mathbf{x},\mathbf{w}_{\text{ML}})$
+- 直感的には、平均を選べば($f(\mathbf{x})=y(\mathbf{x},\mathbf{w}_{\text{ML}})$)良さそう
   - 場合によっては非常に悪い予測になってしまうことも
   - どのような場合にどのような仮定のもとで適用するかを理解することが重要
     - 決定理論 (*decision theory*)によって形式化
