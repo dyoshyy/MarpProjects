@@ -3,4 +3,7 @@
   "cSpell.words": [
     "scriptsize"
   ],
+  "markdown.marp.themes": [
+    "./marp-themes/rinkou.css"
+  ],
 }
