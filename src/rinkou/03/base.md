@@ -96,42 +96,61 @@ _class: eyecatch
 - 最も一般的で強力な表現学習の手法の1つ
 - 入力ペアのうち、ポジティブ（類似）なペアを近くに、ネガティブ（非類似）なペアを遠くに配置するように学習
 - 分類などの下流タスクを容易にする
-- InfoNCE損失関数で、ポジティブペアの近さとネガティブペアの遠さをコントロール
 
+---
+# 6.3.5 Contrastive learning
+### $\mathbf{x}$ (*anchor*)が与えられたとき
+  - $\mathbf{x^+}$: ポジティブペアを成すデータ点
+  - $\{\mathbf{x}_1^-,\ldots,\mathbf{x}_N^-\}$: ネガティブペアを成すデータ点の集合
+  - $\mathbf{x}$と$\mathbf{x}^+$の近さに報酬、$\{\mathbf{x}, \mathbf{x}_n^-\}$の近さにペナルティを与えるような損失関数が必要
+
+**InfoNCE (noise contrastive estimation)損失関数:**
 $$
-\mathcal{L}(w) = -\log \frac{e^{f_w(x)^\top f_w(x^+)}}{e^{f_w(x)^\top f_w(x^+)} + \sum_{n=1}^N e^{f_w(x)^\top f_w(x_n^-)}}
+{E}(\mathbf{w}) = -\ln \frac{\exp\{\mathbf{f}_w(\mathbf{x})^\top \mathbf{f_w}(\mathbf{x}^+)\}}{\exp\{\mathbf{f_w}(\mathbf{x})^\top \mathbf{f_w}(\mathbf{x}^+)\} + \sum_{n=1}^N \exp\{\mathbf{f_w}(\mathbf{x})^\top \mathbf{f_w}(\mathbf{x}_n^-)\}}
 $$
 
 ---
+# 6.3.5 Contrastive learning
 
-### Instance Discrimination
+- 対照学習のアルゴリズムはポジティブ、ネガティブのペアの選び方で主に決まる
+  →事前知識を使って良い表現がどうあるべきかを指定
+## 画像の場合
+- 意味的な情報を保存しつつ入力画像を改変しポジティブペアとする
+- データ拡張 (*data augmentation*) に密接に関連
+  - 回転、平行移動、色変換など
+- その他の画像はネガティブペアとする
 
-- 画像とその加工画像 (回転、色変換など) をポジティブペアとする
-- 画像とその非類似画像をネガティブペアとする
-- 画像の意味的な情報を保持しつつ、幾何学的な変形に頑健な表現を獲得
+→ **Instance Discrimination**と呼ばれる
+
+---
+# 6.3.5 Contrastive learning
+
+## 教師付き対比学習
+- 同一クラスの画像ペアをポジティブ、異なるクラスの画像ペアをネガティブペアとする
+  - 拡張方法への依存の緩和
+  - 意味的に近いペアをネガティブペアにすることを防ぐ
+- クロスエントロピー損失を用いた通常の学習よりも性能が向上
 
 ---
 
-### 教師付き対比学習
-
-- 同一クラスの画像ペアをポジティブペアとする
-- 異なるクラスの画像ペアをネガティブペアとする
-- クラスラベルを利用することで、より良い表現を獲得可能
-
----
-
-### CLIP (Contrastive Language-Image Pre-training)
-
+# 6.3.5 Contrastive learning
+## CLIP (Contrastive Language-Image Pre-training)
+- 複数のモダリティからのデータを同じ表現空間に写す手法
 - 画像とその説明文のペアをポジティブペアとする
-- 画像と不適切な説明文のペアをネガティブペアとする
-- 画像とテキストの両モダリティを同じ表現空間に写す
+- 画像とミスマッチな説明文のペアをネガティブペアとする
+- 弱教師あり (*weakly supervised*) と呼ばれる
 
 $$
 \begin{align*}
-\mathcal{L}(w, \theta) &= -\frac{1}{2}\log\frac{e^{f_w(x)^\top g_\theta(y^+)}}{e^{f_w(x)^\top g_\theta(y^+)} + \sum_n e^{f_w(x^-)^\top g_\theta(y^+)}} \\
-                       &-\frac{1}{2}\log\frac{e^{f_w(x)^\top g_\theta(y^+)}}{e^{f_w(x)^\top g_\theta(y^+)} + \sum_m e^{f_w(x)^\top g_\theta(y_m^-)}}
+E(\mathbf{w}) &= -\frac{1}{2}\ln\frac{\exp\{{f_w(x)^\top g_\theta(y^+)}\}}{\exp\{{f_w(x^+)^\top g_\theta(y^+)}\} + \sum_n \exp\{{f_w(x_n^-)^\top g_\theta(y^+)}\}} \\
+                       &-\frac{1}{2}\ln\frac{\exp\{{f_w(x)^\top g_\theta(y^+)}\}}{\exp\{{f_w(x)^\top g_\theta(y^+)}\} + \sum_m \exp\{{f_w(x)^\top g_\theta(y_m^-)}\}}
+                       \ \ \ \ (6.21)
 \end{align*}
 $$
+---
+# 6.3.5 Contrastive learning
+![w:1200](./images/6_14.png)
+図6.14 ３つの対照学習の模式図
 
 ---
 <!--
