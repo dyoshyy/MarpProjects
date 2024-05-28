@@ -161,13 +161,27 @@ _class: eyecatch
 ---
 # 6.3.6 General network architectures
 
-- 層と層の間の接続関係を自由に設計可能
-- 各ユニットでは、親ユニットの加重和に活性化関数を適用
+- より一般的なネットワーク構造を考える
+- フィードフォワード構造 (閉路がない) に限定
+  - 出力が入力の決定論的関数であることを保証
+- 各ユニットで計算される関数は次のよう
 
+$$z_k = h\left(\sum_{j \in \mathcal{A}(k)} w_{kj}z_j + b_k\right) \tag{6.22}$$
+$\mathcal{A}(k)$: ノード$k$の祖先ノード (*ancestors*)の集合
+$b_k$: バイアス項
+
+---
+<!--
+_class: image_center
+-->
+# 6.3.6 General network architectures
 $$z_k = h\left(\sum_{j \in \mathcal{A}(k)} w_{kj}z_j + b_k\right)$$
 
-- 順伝播計算で全ユニットの活性値を求める
-- フィードフォワード構造 (閉路がない) に限定される
+
+
+![network_architecture w:700](./images/6_15.png)
+図 6.15：一般化されたニューラルネットワーク
+
 
 ---
 <!--
@@ -179,16 +193,23 @@ _class: eyecatch
 # 6.3.7 Tensors
 
 - スカラー、ベクトル、行列を一般化した多次元配列
-- 深層学習では様々な階数のテンソルを扱う
+- 深層学習では様々な階数のテンソル (*tensors*)を扱う
 - 例: カラー画像データセット $\mathcal{X}$
     - $x_{ijkn}$: 画像 $n$, 色チャンネル $k$, 画素位置 $(i, j)$ の値
 - GPUはテンソル演算に特化した並列アーキテクチャ
 
 ---
-
+<!--
+_class: eyecatch
+-->
 # 6.4 Error Functions
 
-適切な誤差関数と出力活性化関数の組み合わせを選択
+---
+# 6.4 Error Functions
+
+- 5章では、回帰・分類問題における線形モデルで適切な誤差関数を導出
+- 同様の議論が多層ニューラルネットワークにも適用可能
+→重要な点を要約
 
 ---
 <!--
@@ -197,37 +218,61 @@ _class: eyecatch
 # 6.4.1 Regression
 
 ---
-
 # 6.4.1 Regression
-
-- 出力活性化関数: 恒等写像 $y_k = a_k$
-- 誤差関数: 二乗和誤差
-
-$$\mathcal{E}(w) = \frac{1}{2}\sum_{n=1}^N \|y(x_n, w) - t_n\|^2$$
-
-- 出力層での勾配:
-
-$$\frac{\partial \mathcal{E}}{\partial a_k} = y_k - t_k$$
-
----
-
-### 最尤推定の観点
 
 - 目標変数 $t$ の条件付き分布を正規分布と仮定:
-    $$p(t|x, w) = \mathcal{N}(t|y(x, w), \sigma^2)$$
-- 負の対数尤度を最小化することで二乗和誤差が導出される
-- 分散 $\sigma^2$ は、最適な $w$ を求めた後に推定可能
+    $$p(t|\mathbf{x}, \mathbf{w}) = \mathcal{N}(t|y(\mathbf{x}, \mathbf{w}), \sigma^2) \tag{6.23}$$
+- $\sigma^2$はガウスノイズと仮定
+  - 応用によってはより一般的な分布への拡張が必要
+- 活性化関数は恒等写像 $y_k = a_k$で十分
+  - 任意の連続関数を近似可能
+
+
+---
+# 6.4.1 Regression
+- N個のi.i.d.な観測値と対応する目標変数が与えられたときの尤度関数は
+$$
+p(\pmb{\mathsf{t}}|\mathbf{X}, \mathbf{w}, \sigma^2) = \prod_{n=1}^N p(t_n|y(\mathbf{x}_n, \mathbf{w}), \sigma^2) \tag{6.24}
+$$
+- 機械学習の文献では、誤差関数の最小化を考えることが一般的
+$$
+\frac{1}{2\sigma^2}\sum_{n=1}^N \{y(\mathbf{x}_n, \mathbf{w})-t_n\}^2 + \frac{N}{2}\ln\sigma^2 + \frac{N}{2}\ln(2\pi) \tag{6.25}
+$$
 
 ---
 
-### 複数の目標変数
+# 6.4.1 Regression
 
-- 目標変数が独立に正規分布に従うと仮定すれば、
+- (6.25)を用いて初めに$\mathbf{w}$を最適化
 
-$$p(t|x, w) = \mathcal{N}(t|y(x, w), \sigma^2I)$$
+$${E}(\mathbf{w}) = \frac{1}{2}\sum_{n=1}^N \{y(\mathbf{x}_n, \mathbf{w})-t_n\}^2 \tag{6.26}$$
 
-- 誤差関数は同じ形になる
-- 独立性の仮定を外せば、もう少し一般的な問題設定
+- $E(\mathbf{w})$の最小化で得られる$\mathbf{w}$を$\mathbf{w}^*$とする
+  - $E(\mathbf{w})$が非凸のとき、大域的最小値とは限らない
+- $\mathbf{w}^*$が得られた後、(6.25)を最適化することで次を得る
+$$\sigma^{2*} = \frac{1}{N}\sum_{n=1}^N \{y(\mathbf{x}_n, \mathbf{w}^*)-t_n\}^2 \tag{6.27}$$
+
+
+---
+
+# 6.4.1 Regression
+## 複数の目標変数
+
+$$p(\mathbf{t}|\mathbf{x}, \mathbf{w}) = \mathcal{N}(\mathbf{t}|y(\mathbf{x}, \mathbf{w}), \sigma^2\bf{I}) \tag{6.28}$$
+
+- 一変数の場合と同様の議論が適用可能
+$${E}(\mathbf{w}) = \frac{1}{2}\sum_{n=1}^N ||\mathbf{y}(\mathbf{x}_n, \mathbf{w})-\mathbf{t}_n||^2 \tag{6.29}$$
+$$\sigma^{2*} = \frac{1}{NK}\sum_{n=1}^N ||\mathbf{y}(\mathbf{x}_n, \mathbf{w}^*)-\mathbf{t}_n||^2 \tag{6.30}$$
+$$K:\text{目標変数の次元数}$$
+
+---
+# 6.4.1 Regression
+- 回帰においては、恒等写像の活性化関数をもつネットワークとみなせる
+- 二乗和誤差関数は次の性質を持つ
+$$
+\frac{\partial E}{\partial a_k} = y_k - t_k \tag{6.31}
+$$
+
 
 ---
 <!--
@@ -237,32 +282,37 @@ _class: eyecatch
 
 ---
 # 6.4.2 Binary classification
+- canonical link functionの議論に則ってロジスティックシグモイド関数を活性化関数として持つネットワークを考える
+  - $0\le y(\mathbf{x},\mathbf{w})\le1$を条件とする
+  - $y(\mathbf{x},\mathbf{w})$を条件付き確率$p(\mathcal{C}_1|\mathbf{x})$と解釈できる
+- 目標変数の条件付確率はベルヌーイ分布となる
+$$
+p(t|\mathbf{x}, \mathbf{w}) = y(\mathbf{x}, \mathbf{w})^t\{1-y(\mathbf{x}, \mathbf{w})\}^{1-t} \tag{6.32}
+$$
 
-出力活性化関数: シグモイド関数 $y_k = \sigma(a_k)$
-誤差関数: 交差エントロピー誤差
+---
+# 6.4.2 Binary classification
+- 独立な観測データが与えられたときの誤差関数は次の形の交差エントロピー (*cross-entropy*)誤差となる
+$$
+E(\mathbf{w}) = -\sum_{n=1}^N \{t_n\ln y_n + (1-t_n)\ln(1-y_n)\} \tag{6.33}
+$$
+- $y_n$は$n$番目の観測データに対するモデルの出力$y(\mathbf{x}_n, \mathbf{w})$を表す
+- 誤ったラベリングがされる確率$\epsilon$を導入することでラベルノイズの考慮も可能
+
+---
+# 6.4.2 Binary classification
+
+## 複数の二値分類
+
+- それぞれロジスティックシグモイドを活性化関数とする$K$個の出力を持つネットワークを考える
+- クラスラベルの独立性を仮定すると、目標変数の条件付き分布と誤差関数は次のよう
+$$
+p(\mathbf{t}|\mathbf{x}, \mathbf{w}) = \prod_{k=1}^K y(\mathbf{x}, \mathbf{w})^{t_k}[1-y(\mathbf{x}, \mathbf{w})]^{1-t_k} \tag{6.34}
+$$
 
 $$
-E(\mathbf{w}) = -\sum_{n=1}^N \{t_n \text{ln} y_n + (1-t_n) \text{ln} (1-y_n)\}
+{E}(\mathbf{w}) = -\sum_{n=1}^N\sum_{k=1}^K \{t_{nk}\ln y_{nk} + (1-t_{nk})\ln(1-y_{nk})\} \tag{6.35}
 $$
-
-出力層での勾配:
-
-$$\frac{\partial \mathcal{E}}{\partial a_k} = y_k - t_k$$
-
-最尤推定の観点
-
-目標変数 $t$ のベルヌーイ分布を仮定:
-$$p(t|x, w) = y(x, w)^t (1 - y(x, w))^{1-t}$$
-負の対数尤度を最小化することで交差エントロピー誤差が導出される
-混同行列によるラベルノイズを許容することも可能
-
-
-複数の二値分類
-
-各クラスに対してシグモイド出力を用意する
-全クラスの交差エントロピー誤差を足し合わせた形になる
-
-$$\mathcal{E}(w) = -\sum_{n=1}^N\sum_{k=1}^K \left{t_{nk}\log y_{nk} + (1-t_{nk})\log(1-y_{nk})\right}$$
 
 ---
 <!--
@@ -272,30 +322,25 @@ _class: eyecatch
 
 ---
 # 6.4.3 Multiclass classification
+- $K$個の互いに排他的なクラスの分類問題を考える
+- 誤差関数は多クラス交差エントロピー誤差となる
 
-出力活性化関数: ソフトマックス関数
+$$
+{E}(\mathbf{w}) = -\sum_{n=1}^N\sum_{k=1}^K t_{kn}\ln y_k(\mathbf{x}_n, \mathbf{w}) \tag{6.36}
+$$
 
-$$y_k(x, w) = \frac{e^{a_k(x, w)}}{\sum_j e^{a_j(x, w)}}$$
+- 出力活性化関数はソフトマックス関数となる
 
-誤差関数: 多クラス交差エントロピー誤差
-
-$$\mathcal{E}(w) = -\sum_{n=1}^N\sum_{k=1}^K t_{kn}\log y_k(x_n, w)$$
-
-出力層での勾配:
-
-$$\frac{\partial \mathcal{E}}{\partial a_k} = y_k - t_k$$
-
-最尤推定の観点
-
-目標変数 $t$ の多項分布を仮定:
-$$p(t|x, w) = \prod_{k=1}^K y_k(x, w)^{t_k}$$
-負の対数尤度を最小化することで多クラス交差エントロピー誤差が導出される
+$$y_k(\mathbf{x}, \mathbf{w}) = \frac{\exp{(a_k(\mathbf{x}, \mathbf{w}))}}{\sum_j \exp{(a_j(\mathbf{x}, \mathbf{w}))}} \tag{6.37}$$
 
 ---
-# まとめ
+# 6.4.3 Multiclass classification
 
-転移学習、対比学習により、有用な内部表現を学習可能
-一般的な深層ネットワークでは、層間の接続関係が柔軟に設計可能
-回帰、分類などの問題に応じた適切な出力活性化関数と誤差関数を選択
-複数のモーダルなデータには、変種の対比学習手法が有効
-テンソル演算は深層学習の基礎となる重要な概念
+- 問題ごとに適切な出力ユニットの活性化関数と誤差関数が存在
+- 次章ではマルチモーダルなネットワークの出力に関して条件付き分布と誤差関数を考える
+
+| 問題         | 出力活性化関数           | 誤差関数                   | 
+| :----------: | :----------------------: | :------------------------: | 
+| 回帰         | 線形                     | 二乗和誤差                 | 
+| 二クラス分類 | ロジスティック<br>シグモイド | クロスエントロピー         | 
+| 多クラス分類 | ソフトマックス           | 多クラスクロスエントロピー | 
