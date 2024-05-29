@@ -208,7 +208,7 @@ $$\frac{1}{2}\sum_{n=1}^N\{t_n - \mathbf{w}^T\phi(\mathbf{x}_n)\}^2 + \frac{\lam
 - $\mathbf{w}$の2次関数として、閉形式で解が得られる
 - (4.26)の$\mathbf{w}$に沿った勾配を0にし、$\mathbf{w}$について解くと:
 $$\mathbf{w} = (\lambda I + \mathbf\Phi^T\mathbf\Phi)^{-1}\mathbf\Phi^T\pmb{\mathsf{t}}\tag{4.27}$$
-- 通常の最小二乗解の拡張形
+- 通常の最小二乗解(4.14)の拡張形
 
 ---
 # 4.1.7 Multiple outputs
@@ -293,7 +293,7 @@ $$
 - $f(\mathbf{x})$を完全に柔軟な関数と仮定すると、変分法を用いることができる
 $$
 \frac{\delta\mathbb{E}[L]}{\delta f(\mathbf{x})}
-= 2\int\{f(\mathbf{x}) - t\}p(t|\mathbf{x})dt = 0\tag{4.36}
+= 2\int\{f(\mathbf{x}) - t\}p(\mathbf{x},t)dt = 0\tag{4.36}
 $$
 - $f(\mathbf{x})$について解いて和と積の法則を用いると:
 $$
@@ -303,7 +303,7 @@ $$
 ---
 # 4.2 Decision theory
 - 回帰関数 (*regression function*)
-  - $\mathbf{x}$で条件づけした$t$の平均値
+  - $\mathbf{x}$で条件づけした$t$の平均値 (図4.5)
   - 多次元の出力にも拡張可能
   - (4.8)の場合、条件付き平均は
 
@@ -315,7 +315,7 @@ $
 
 ---
 # 4.2 Decision theory
-- 別の方法で同じ結果を導く
+別の方法で同じ結果を導く
 - 最適解が条件付き期待値であるという知識を用いると次のように展開できる
 $$
 \begin{align}
