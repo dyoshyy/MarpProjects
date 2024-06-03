@@ -1,0 +1,113 @@
+/* @theme zasshikai */
+
+@import "default";
+
+section {
+    font-family: "Meiryo", sans-serif;
+    padding: 4%;
+    justify-content: start;
+    background-color: rgb(255, 255, 255);
+}
+
+/* タイトル */
+section.title {
+    font-size: 28pt;
+    text-align: left;
+    justify-content: center;
+}
+
+section.title h1 {
+    color: rgb(32, 32, 32);
+    font-size: 44pt;
+    text-align: left;
+}
+
+/* アイキャッチ */
+section.eyecatch{
+    display: flex;
+    justify-content: center;
+    align-items: left;
+}
+
+section.eyecatch h1{
+    font-size: 44pt;
+    padding: 20px;
+    background:rgb(147, 172, 181);
+  }
+
+/* スライド */
+section.slides {
+    font-size: 28pt;
+    line-height: 1.3;
+}
+
+section.slides h1 {
+    font-size: 32pt;
+    color: rgb(31, 97, 119);
+}
+
+section.slides h2 {
+    font-size: 32pt;
+    color: rgb(0, 0, 0);
+    margin: 0;
+    padding: 0;
+}
+
+section.slides ul {
+    padding-top: 1%;
+    padding-left: 4%;
+}
+
+section.slides ol {
+    padding-top: 1%;
+}
+
+/* 図 */
+p:has(img) {
+    position: absolute;
+    text-align: center;
+    font-size: 18pt;
+    height: auto;
+    bottom: 6%;
+    right: 3%;
+}
+
+section.image_center h1 {
+    font-size: 32pt;
+    color: rgb(31, 97, 119);
+}
+
+
+section.image_center p:has(img){
+    position: absolute;
+    bottom: 6%;
+    right: 10%;
+    left: 10%;
+    text-align: center;
+}
+
+section.image_center .MathJax {
+    font-size: 24px;
+}
+
+/* フッター */
+footer {
+    position: absolute;
+    bottom: 1%;
+    display: flex;
+    justify-content: center;
+    font-size: 16pt;
+}
+
+/* ページ番号 */
+section::after {
+    content: attr(data-marpit-pagination)"/"attr(data-marpit-pagination-total);
+    position: absolute;
+    bottom: 1%;
+    font-size: 16pt;
+}
+
+/* 数式 */
+.MathJax {
+    font-size: 24pt;
+    }

@@ -4,6 +4,7 @@
     "scriptsize"
   ],
   "markdown.marp.themes": [
-    "./marp-themes/rinkou.css"
+    "./marp-themes/rinkou.css",
+    "./marp-themes/zasshikai.css"
   ],
 }
