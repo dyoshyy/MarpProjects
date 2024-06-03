@@ -22,6 +22,19 @@ section.title h1 {
     text-align: left;
 }
 
+/* アイキャッチ */
+section.eyecatch{
+    display: flex;
+    justify-content: center;
+    align-items: left;
+}
+
+section.eyecatch h1{
+    font-size: 44pt;
+    padding: 20px;
+    background:rgb(147, 172, 181);
+  }
+
 /* スライド */
 section.slides {
     font-size: 28pt;
