@@ -72,6 +72,12 @@ p:has(img) {
     right: 3%;
 }
 
+section.image_center h1 {
+    font-size: 32pt;
+    color: rgb(31, 97, 119);
+}
+
+
 section.image_center p:has(img){
     position: absolute;
     bottom: 6%;

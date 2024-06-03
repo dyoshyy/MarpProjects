@@ -44,8 +44,11 @@ _class: eyecatch
 - 少量のデータだけで学習するより高い精度を実現可能
 
 ---
-
-![transfer_learning](./images/6_13.png)
+<!--
+_class: image_center
+-->
+# 6.3.4 Transfer learning
+![w:800](./images/6_13.png)
 図6.13 転移学習の模式図
 
 ---
@@ -61,7 +64,7 @@ _class: eyecatch
 ---
 # 6.3.4 Transfer learning
 ## 事前学習 (*pre-training*)
-- あるタスクでパラメータを学習し、他のタスクに適用するプロセス
+- 他のタスクに適用されるパラメータをあるタスクで事前に学習
 - 新しいタスクにおいては、識別層を含む一部の層のみを再学習
 - ファインチューニング (*fine-tuning*) では、全ての層を再学習
   - 非常に小さい学習率とイテレーション数で学習することで
@@ -106,7 +109,8 @@ _class: eyecatch
 
 **InfoNCE (noise contrastive estimation)損失関数:**
 $$
-{E}(\mathbf{w}) = -\ln \frac{\exp\{\mathbf{f}_w(\mathbf{x})^\top \mathbf{f_w}(\mathbf{x}^+)\}}{\exp\{\mathbf{f_w}(\mathbf{x})^\top \mathbf{f_w}(\mathbf{x}^+)\} + \sum_{n=1}^N \exp\{\mathbf{f_w}(\mathbf{x})^\top \mathbf{f_w}(\mathbf{x}_n^-)\}}
+{E}(\mathbf{w}) = -\ln \frac{\exp\{\mathbf{f_w}(\mathbf{x})^\top \mathbf{f_w}(\mathbf{x}^+)\}}{\exp\{\mathbf{f_w}(\mathbf{x})^\top \mathbf{f_w}(\mathbf{x}^+)\} + \sum_{n=1}^N \exp\{\mathbf{f_w}(\mathbf{x})^\top \mathbf{f_w}(\mathbf{x}_n^-)\}}
+\ \ \ (6.20)
 $$
 
 ---
@@ -116,8 +120,8 @@ $$
   →事前知識を使って良い表現がどうあるべきかを指定
 ## 画像の場合
 - 意味的な情報を保存しつつ入力画像を改変しポジティブペアとする
-- データ拡張 (*data augmentation*) に密接に関連
-  - 回転、平行移動、色変換など
+  - データ拡張 (*data augmentation*) に密接に関連
+    - 回転、平行移動、色変換など
 - その他の画像はネガティブペアとする
 
 → **Instance Discrimination**と呼ばれる
@@ -136,14 +140,14 @@ $$
 # 6.3.5 Contrastive learning
 ## CLIP (Contrastive Language-Image Pre-training)
 - 複数のモダリティからのデータを同じ表現空間に写す手法
-- 画像とその説明文のペアをポジティブペアとする
-- 画像とミスマッチな説明文のペアをネガティブペアとする
+  - ポジティブペア: 画像とその説明文のペア
+  - ネガティブペア: 画像とミスマッチな説明文のペア
 - 弱教師あり (*weakly supervised*) と呼ばれる
 
 $$
 \begin{align*}
-E(\mathbf{w}) &= -\frac{1}{2}\ln\frac{\exp\{{f_w(x)^\top g_\theta(y^+)}\}}{\exp\{{f_w(x^+)^\top g_\theta(y^+)}\} + \sum_n \exp\{{f_w(x_n^-)^\top g_\theta(y^+)}\}} \\
-                       &-\frac{1}{2}\ln\frac{\exp\{{f_w(x)^\top g_\theta(y^+)}\}}{\exp\{{f_w(x)^\top g_\theta(y^+)}\} + \sum_m \exp\{{f_w(x)^\top g_\theta(y_m^-)}\}}
+E(\mathbf{w}) &= -\frac{1}{2}\ln\frac{\exp\{{\mathbf{f_w}(\mathbf{x})^\top \mathbf{g_\theta}(\mathbf{y^+})}\}}{\exp\{{\mathbf{f_w}(\mathbf{x}^+)^\top \mathbf{g_\theta}(\mathbf{y^+})}\} + \sum_n \exp\{{\mathbf{f_w}(\mathbf{x}_n^-)^\top \mathbf{g_\theta}(\mathbf{y^+})}\}} \\
+                       &-\frac{1}{2}\ln\frac{\exp\{{\mathbf{f_w}(\mathbf{x})^\top \mathbf{g_\theta}(\mathbf{y^+})}\}}{\exp\{{\mathbf{f_w}(\mathbf{x^+})^\top \mathbf{g_\theta}(\mathbf{y^+})}\} + \sum_m \exp\{{\mathbf{f_w}(\mathbf{x^+})^\top \mathbf{\mathbf{g_\theta}}(\mathbf{y}_m^-)}\}}
                        \ \ \ \ (6.21)
 \end{align*}
 $$
