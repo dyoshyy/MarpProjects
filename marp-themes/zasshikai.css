@@ -6,19 +6,20 @@ section {
     font-family: "Meiryo", sans-serif;
     padding: 4%;
     justify-content: start;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(255, 247, 242);
 }
 
 /* タイトル */
 section.title {
-    font-size: 28pt;
+    font-size: 26pt;
+    color: rgb(91, 91, 91);
     text-align: left;
     justify-content: center;
 }
 
 section.title h1 {
-    color: rgb(32, 32, 32);
-    font-size: 44pt;
+    color: rgb(43, 43, 43);
+    font-size: 50pt;
     text-align: left;
 }
 
@@ -31,8 +32,9 @@ section.eyecatch{
 
 section.eyecatch h1{
     font-size: 44pt;
+    color: rgb(66, 35, 16);
     padding: 20px;
-    background:rgb(147, 172, 181);
+    background:rgb(222, 212, 191);
   }
 
 /* スライド */
@@ -43,7 +45,7 @@ section.slides {
 
 section.slides h1 {
     font-size: 32pt;
-    color: rgb(31, 97, 119);
+    color: rgb(79, 44, 23);
 }
 
 section.slides h2 {
@@ -74,7 +76,7 @@ p:has(img) {
 
 section.image_center h1 {
     font-size: 32pt;
-    color: rgb(31, 97, 119);
+    color: rgb(79, 44, 23);
 }
 
 
