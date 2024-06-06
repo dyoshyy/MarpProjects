@@ -45,40 +45,47 @@ _class: eyecatch
 - 生成器は識別機を騙すように、識別器は偽物を見破るように学習
 - 学習後は潜在変数から生成器を通してデータを生成
 
-![w:800](images/GAN.svg)
+![w:700](images/GAN.svg)
+
+<div style="text-align: right; font-size: 18pt;">[1] Goodfellow, I. J., et al. (2014). "Generative adversarial nets" NIPS.</div>
 
 ---
 # 研究背景
-## ◆ GAN (Generative Adversarial Networks)
+## ◆ GAN (Generative Adversarial Networks) [1]
 - 生成器 $G$ と識別器 $D$ の最適化問題
-<br>
 
 $$
 \min_G \max_D V(D, G) = \mathbb{E}_{x \sim p_{\text{data}}(x)}[\log D(x)] + \mathbb{E}_{z \sim p_z(z)}[\log(1 - D(G(z)))]
 $$
-![w:800](images/GAN.svg)
+![w:700](images/GAN.svg)
+
+<div style="text-align: right; font-size: 18pt;">[1] Goodfellow, I. J., et al. (2014). "Generative adversarial nets" NIPS.</div>
 
 ---
 # 研究背景
 
-## ◆ VAE (Variational Autoencoder)
+## ◆ VAE (Variational Autoencoder) [2]
 - EMアルゴリズムと変分ベイズを融合させた手法
 - 潜在空間におけるデータの分布を学習
 - 学習後は潜在変数からデコーダーを用いてデータを生成
 
 ![w:800](images/VAE.svg)
 
+<div style="text-align: right; font-size: 18pt;">[2] Kingma, D. P., & Welling, M. (2013). "Auto-encoding variational bayes" ICLR.</div>
+
 ---
 # 研究背景
 
 - 深層生成モデルにおいて、生成される画像は潜在空間上の点の座標で決まる
-  - 潜在変数の座標を操作することで画像編集が可能
+→潜在変数の座標を操作することで画像編集が可能
 
 ---
 # 研究背景
-- 自然で高精度な編集をするための手法が複数提案されている
+- 自然で高精度な編集をするための手法が複数提案されている [3]
 
 ![w:1100](images/1.png)
+
+<div style="text-align: right; font-size: 10pt;">[3] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
 
 ---
 <!--
@@ -88,10 +95,10 @@ _class: eyecatch
 
 ---
 # 関連研究
-## 直交座標系を学習する手法
+## 直交座標系を学習する手法 []
 - 表現ベクトルの各要素に特定の属性が紐づけられるように学習
 - 新しい目的関数を導入
-  - 学習コストが高い
+  - 再学習が必要となり、学習コストが高い
   - 学習が不安定化し、生成画像の品質が低下する
 
 ---
