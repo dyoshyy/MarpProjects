@@ -95,19 +95,47 @@ _class: eyecatch
 
 ---
 # 関連研究
-## 直交座標系を学習する手法 []
+## 直交座標系を学習する手法
 - 表現ベクトルの各要素に特定の属性が紐づけられるように学習
-- 新しい目的関数を導入
+  - 潜在変数と画像の相互情報量を最大化 [4]
+  - 目的関数の*KL*項の影響を大きくする [5]
+
+**問題点**
   - 再学習が必要となり、学習コストが高い
   - 学習が不安定化し、生成画像の品質が低下する
+
+<div style="text-align: right; font-size: 13pt; padding-top: 50px">
+[4] Xi Chen. et al.(2016) InfoGAN: Interpretable Representation Learning by Information Maximizing Generative Adversarial Nets 
+<br>
+[5] I. Higgins et al. (2017) beta-VAE: Learning Basic Visual Concepts with a Constrained Variational Framework
+</div>
 
 ---
 # 関連研究
 ## 線形ベクトル演算を定義する手法
-- 学習済みモデルのパラメータを解析
-- 潜在変数の分布を分析
-- PCAを用いて潜在空間において属性に対応する主成分を抽出
-- 潜在空間中の基準点によって属性ベクトルの向きが異なる
+- 学習済みモデルのパラメータを解析 [6]
+- PCAを用いて潜在空間において属性に対応する主成分を抽出 [7]
+- 生成された画像を属性によってグループ分けし、その差を属性ベクトルとみなす [8]
+- 表現ベクトルを変化させ、それによって引き起こされる画像の変化をグループ分けする [9]
+
+<div style="text-align: right; font-size: 14pt; padding-top: 40px">
+[6] Y. Shen, et al. (2021) Closed-Form Factorization of Latent Semantics in GANs
+<br>
+[7] E. Härkönen, et al. (2020) GANSpace: Discovering Interpretable GAN Controls
+<br>
+[8] A. Radford, et al. (2016) Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks
+<br>
+[9] A. Voynov, A. Babenko (2020) Unsupervised Discovery of Interpretable Directions in the GAN Latent Space
+</div>
+
+---
+# 関連研究
+## 線形ベクトル演算を定義する手法
+
+→ 潜在空間中の基準点によって属性ベクトルの向きが異なる
+
+
+
 
 ---
 # 関連研究
