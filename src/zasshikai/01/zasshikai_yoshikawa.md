@@ -36,7 +36,7 @@ _class: eyecatch
 # 研究背景
 
 - 画像を自由に作り出すことはコンピュータビジョンの研究における究極のゴールの一つである
-- 深層生成モデルを用いた画像生成手法が提案されてきた。
+- 深層生成モデルを用いた画像生成手法が提案されてきた
   - 例：GAN, VAE, 拡散モデル
 
 ---
@@ -80,6 +80,8 @@ $$
 - 深層生成モデルにおいて、生成される画像は潜在空間上の点の座標で決まる
 →潜在変数の座標を操作することで画像編集が可能
 
+![w:600](images/DeepGenerative.svg)
+
 ---
 # 研究背景
 - 自然で高精度な編集をするための手法が複数提案されている [3]
@@ -97,15 +99,16 @@ _class: eyecatch
 ---
 # 関連研究
 ## 直交座標系を学習する手法
-- 表現ベクトルの各要素に特定の属性が紐づけられるように学習
+- 表現ベクトルの各要素に特定の属性が紐づけられるように制約
   - 潜在変数と画像の相互情報量を最大化 [4]
   - 目的関数の*KL*項の影響を大きくする [5]
 
 **問題点**
   - 再学習が必要となり、学習コストが高い
   - 学習が不安定化し、生成画像の品質が低下する
+→ 学習済みモデルに対して編集を行う手法が必要
 
-<div style="text-align: right; font-size: 13pt; padding-top: 50px">
+<div style="text-align: right; font-size: 13pt; padding-top: ２0px">
 [4] Xi Chen. et al.(2016) InfoGAN: Interpretable Representation Learning by Information Maximizing Generative Adversarial Nets 
 <br>
 [5] I. Higgins et al. (2017) beta-VAE: Learning Basic Visual Concepts with a Constrained Variational Framework
@@ -189,6 +192,12 @@ _class: eyecatch
 - 線形ベクトル演算、ベクトル場の両方の利点を持つ
 
 ![w:1100](images/1.png)
+
+---
+# 関連研究
+## 曲線座標系を定義する手法
+![w:750](image.png)
+<div style="text-align: right; font-size: 12pt; padding-top:0px;">[3] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
 
 ---
 <!--

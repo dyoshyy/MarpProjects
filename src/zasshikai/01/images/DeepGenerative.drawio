@@ -1,0 +1,53 @@
+<mxfile host="65bd71144e">
+    <diagram id="9qb3gVUu2T_-5S_EjQZa" name="ページ1">
+        <mxGraphModel dx="683" dy="393" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="8" value="" style="edgeStyle=none;html=1;" parent="1" source="5" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="430" y="340" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="5" value="潜在変数 z&lt;br&gt;z ~ N(0, 1)" style="whiteSpace=wrap;html=1;rounded=1;" parent="1" vertex="1">
+                    <mxGeometry x="310" y="310" width="90" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="" style="shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;html=1;fixedSize=1;rounded=1;rotation=-90;" parent="1" vertex="1">
+                    <mxGeometry x="390" y="322.5" width="120" height="35" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" value="" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="12" target="15" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="470" y="340" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="14" value="Decoder" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;rotation=90;" parent="1" vertex="1">
+                    <mxGeometry x="420" y="325" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="出力データ" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="490" y="320" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="" style="edgeStyle=none;html=1;" parent="1" source="18" target="20" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="潜在変数 z" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="300" y="210" width="80" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;" parent="1" source="20" target="21" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" value="Generator" style="whiteSpace=wrap;html=1;strokeColor=#000000;rounded=1;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="210" width="80" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" value="偽物のデータ" style="whiteSpace=wrap;html=1;strokeColor=#000000;rounded=1;" parent="1" vertex="1">
+                    <mxGeometry x="500" y="210" width="80" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" value="GAN" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;container=1;" vertex="1" parent="1">
+                    <mxGeometry x="220" y="225" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" value="VAE" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;container=1;" vertex="1" parent="1">
+                    <mxGeometry x="220" y="325" width="60" height="30" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
