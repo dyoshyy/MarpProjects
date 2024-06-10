@@ -20,9 +20,10 @@ paginate: true
 # 目次
 - 研究背景
 - 関連研究
-  - GANSpace
-  - WarpedGANSpace
-  - CurvilinearGANSpace
+  - 直交座標系を学習する手法
+  - 線形ベクトル演算を定義する手法
+  - ベクトル場を定義する手法
+  - 曲線座標系を定義する手法
 - 修論に向けて
 
 ---
@@ -175,10 +176,19 @@ _class: eyecatch
 
 ---
 # 関連研究
+## 曲線座標系を定義する手法 [3]
+- 潜在空間に曲線座標系を仮定し、直交座標系への写像$f:\mathcal{Z}\rightarrow \mathcal{V}$を学習
+
+<img src="images/4.png" width="1200" style="padding-top:20; padding-left:0">
+
+<div style="text-align: right; font-size: 10pt; padding-top:0px;">[3] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
+
+---
+# 関連研究
 ## 曲線座標系を定義する手法
-- 潜在空間に曲線座標系を仮定し、直交座標系を連続的に変化させたものとして学習
 - 線形ベクトル演算、ベクトル場の両方の利点を持つ
 
+![w:1100](images/1.png)
 
 ---
 <!--
@@ -189,8 +199,16 @@ _class: eyecatch
 ---
 # 修論に向けて
 - DeCurvEdは潜在変数に条件づけられた任意のモデルに適用可能
-- VAE, Conditional PixelCNNといったモデルでも有効性を示す
-- 生成モデルのアラインメント
-  - 入力画像と異なるドメインの画像を生成
+1. VAE, Conditional PixelCNNといったモデルでも有効性を示す
+2. 生成モデルのアラインメント
+    - 入力画像と異なるドメインの画像を生成
   例：人の顔写真にそっくりなPixar風の画像を生成
-  　　犬にそっくりな猫の画像を生成
+
+---
+# 修論に向けて
+## 生成モデルのアラインメント
+![w:800](images/5.png)
+
+<div style="text-align: right; font-size: 14pt;">
+M. Ladron de Guevara, et al. (2023) Cross-modal Latent Space Alignment for Image to Avatar Translation.
+</div>
