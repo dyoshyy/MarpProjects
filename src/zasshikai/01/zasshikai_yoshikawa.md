@@ -47,7 +47,7 @@ _class: eyecatch
 
 ![w:700](images/GAN.svg)
 
-<div style="text-align: right; font-size: 18pt;">[1] Goodfellow, I. J., et al. (2014). "Generative adversarial nets" NIPS.</div>
+<div style="text-align: right; font-size: 18pt;">[1] Goodfellow, I. J., et al. (2014). Generative adversarial nets NIPS</div>
 
 ---
 # 研究背景
@@ -59,7 +59,7 @@ $$
 $$
 ![w:700](images/GAN.svg)
 
-<div style="text-align: right; font-size: 18pt;">[1] Goodfellow, I. J., et al. (2014). "Generative adversarial nets" NIPS.</div>
+<div style="text-align: right; font-size: 18pt;">[1] Goodfellow, I. J., et al. (2014). Generative adversarial nets NIPS</div>
 
 ---
 # 研究背景
@@ -71,7 +71,7 @@ $$
 
 ![w:800](images/VAE.svg)
 
-<div style="text-align: right; font-size: 18pt;">[2] Kingma, D. P., & Welling, M. (2013). "Auto-encoding variational bayes" ICLR.</div>
+<div style="text-align: right; font-size: 18pt;">[2] Kingma, D. P., & Welling, M. (2013). Auto-encoding variational bayes ICLR</div>
 
 ---
 # 研究背景
@@ -128,21 +128,50 @@ _class: eyecatch
 [9] A. Voynov, A. Babenko (2020) Unsupervised Discovery of Interpretable Directions in the GAN Latent Space
 </div>
 
+
+---
+# 関連研究
+## 線形ベクトル演算を定義する手法 [9]
+生成器Gは固定したまま、次の2つを学習
+1. 行列$A\in\mathbb{R}^{d\times K}$: 属性インデックスから潜在変数の変化量を決定
+2. リンコンストラクタ$R$: 編集前後の画像から属性ベクトルと変化量を回帰
+
+![w:1150](images/2.png)
+<div style="text-align: right; font-size: 14pt; padding-top: 10px">
+[9] A. Voynov, A. Babenko (2020) Unsupervised Discovery of Interpretable Directions in the GAN Latent Space
+</div>
+
 ---
 # 関連研究
 ## 線形ベクトル演算を定義する手法
+- 現実に存在するデータには偏りやゆがみ、属性間の相関がある
+- 潜在空間中の基準点によって属性ベクトルの向きが異なる [10]
+→属性ベクトルの向きを潜在空間の座標に依存する形で定義
 
-→ 潜在空間中の基準点によって属性ベクトルの向きが異なる
-
-
+<div style="text-align: right; font-size: 14pt; padding-top: 280px">
+[10] V. Khrulkov, et al. (2021) Latent Transformations via NeuralODEs for GAN-based Image Editing
+</div>
 
 
 ---
 # 関連研究
 ## ベクトル場を定義する手法
-- 属性ベクトルの向きを潜在空間の座標に依存する形で定義
-- ベクトル場に沿うことで非線形な編集が可能
-- 可換な編集は不可能
+- RBFカーネルの重み付き和で属性ごとのベクトル場を定義 [11]
+
+
+<img src="images/3.png" width="1200" style="padding-top:80">
+<div style="text-align: right; font-size: 14pt; padding-top: 10px">
+[11] C. Tzelepis, et al. (2021) WarpedGANSpace: Discovering and Interpolating Interpretable GAN Controls
+</div>
+
+---
+# 関連研究
+## ベクトル場を定義する手法
+- 座標が局所的にしか定義されていないため、大域的には不整合が起こる可能性がある [3]
+- ベクトル場は一般に非可換であり、編集が非可換になる
+→ 可換なベクトル場を定義する手法が必要
+
+<div style="text-align: right; font-size: 11pt; padding-top:240px;">[3] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
 
 ---
 # 関連研究
