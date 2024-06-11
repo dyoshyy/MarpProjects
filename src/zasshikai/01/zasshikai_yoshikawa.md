@@ -14,7 +14,7 @@ _class: title
 ---
 <!--
 class: slides
-footer: 2024/06/11<span style="margin-left:250px;">Deep Learning : Foundations and Concepts 2024</span>
+footer: 2024/06/11<span style="margin-left:380px;"> 2024年度前期雑誌会</span>
 paginate: true
 -->
 # 目次
@@ -35,24 +35,26 @@ _class: eyecatch
 ---
 # 研究背景
 
-- 画像を自由に作り出すことはコンピュータビジョンの研究における究極のゴールの一つである
+- 画像を自由に作り出すことはコンピュータビジョンの研究における究極のゴールの一つ [1]
 - 深層生成モデルを用いた画像生成手法が提案されてきた
   - 例：GAN, VAE, 拡散モデル
 
+<div style="text-align: right; font-size: 11pt; padding-top:270px;">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
+
 ---
 # 研究背景
-## ◆ GAN (Generative Adversarial Networks) [1]
+## ◆ GAN (Generative Adversarial Networks) [2]
 - 2つの敵対的なネットワークを競わせることで学習
 - 生成器は識別機を騙すように、識別器は偽物を見破るように学習
 - 学習後は潜在変数から生成器を通してデータを生成
 
 ![w:700](images/GAN.svg)
 
-<div style="text-align: right; font-size: 18pt;">[1] Goodfellow, I. J., et al. (2014). Generative adversarial nets NIPS</div>
+<div style="text-align: right; font-size: 18pt;">[2] Goodfellow, I. J., et al. (2014). Generative adversarial nets NIPS</div>
 
 ---
 # 研究背景
-## ◆ GAN (Generative Adversarial Networks) [1]
+## ◆ GAN (Generative Adversarial Networks) [2]
 - 生成器 $G$ と識別器 $D$ の最適化問題
 
 $$
@@ -60,19 +62,19 @@ $$
 $$
 ![w:700](images/GAN.svg)
 
-<div style="text-align: right; font-size: 18pt;">[1] Goodfellow, I. J., et al. (2014). Generative adversarial nets NIPS</div>
+<div style="text-align: right; font-size: 18pt;">[2] Goodfellow, I. J., et al. (2014). Generative adversarial nets NIPS</div>
 
 ---
 # 研究背景
 
-## ◆ VAE (Variational Autoencoder) [2]
+## ◆ VAE (Variational Autoencoder) [3]
 - EMアルゴリズムと変分ベイズを融合させた手法
 - 潜在空間におけるデータの分布を学習
 - 学習後は潜在変数からデコーダーを用いてデータを生成
 
 ![w:800](images/VAE.svg)
 
-<div style="text-align: right; font-size: 18pt;">[2] Kingma, D. P., & Welling, M. (2013). Auto-encoding variational bayes ICLR</div>
+<div style="text-align: right; font-size: 18pt;">[3] Kingma, D. P., & Welling, M. (2013). Auto-encoding variational bayes ICLR</div>
 
 ---
 # 研究背景
@@ -84,11 +86,11 @@ $$
 
 ---
 # 研究背景
-- 自然で高精度な編集をするための手法が複数提案されている [3]
+- 自然で高精度な編集をするための手法が複数提案されている [1]
 
 ![w:1100](images/1.png)
 
-<div style="text-align: right; font-size: 10pt;">[3] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
+<div style="text-align: right; font-size: 10pt;">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
 
 ---
 <!--
@@ -100,8 +102,8 @@ _class: eyecatch
 # 関連研究
 ## 直交座標系を学習する手法
 - 表現ベクトルの各要素に特定の属性が紐づけられるように制約
-  - 潜在変数と画像の相互情報量を最大化 [4]
-  - 目的関数の*KL*項の影響を大きくする [5]
+  - GANにおいて潜在変数と画像の相互情報量を最大化 [4]
+  - VAEにおいて目的関数の*KL*項の影響を大きくする [5]
 
 **問題点**
   - 再学習が必要となり、学習コストが高い
@@ -171,33 +173,35 @@ _class: eyecatch
 ---
 # 関連研究
 ## ベクトル場を定義する手法
-- 座標が局所的にしか定義されていないため、大域的には不整合が起こる可能性がある [3]
+- 座標が局所的にしか定義されていないため、大域的には不整合が起こる可能性がある [1]
 - ベクトル場は一般に非可換であり、編集が非可換になる
 → 可換なベクトル場を定義する手法が必要
 
-<div style="text-align: right; font-size: 11pt; padding-top:240px;">[3] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
+<div style="text-align: right; font-size: 11pt; padding-top:240px;">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
 
 ---
 # 関連研究
-## 曲線座標系を定義する手法 [3]
+## 曲線座標系を定義する手法 [1]
 - 潜在空間に曲線座標系を仮定し、直交座標系への写像$f:\mathcal{Z}\rightarrow \mathcal{V}$を学習
 
 <img src="images/4.png" width="1200" style="padding-top:20; padding-left:0">
 
-<div style="text-align: right; font-size: 10pt; padding-top:0px;">[3] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
+<div style="text-align: right; font-size: 10pt; padding-top:0px;">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
 
 ---
 # 関連研究
-## 曲線座標系を定義する手法
+## 曲線座標系を定義する手法 [1]
 - 線形ベクトル演算、ベクトル場の両方の利点を持つ
 
-![w:1100](images/1.png)
+![w:980](images/1.png)
+<div style="text-align: right; font-size: 11pt; padding-top:0px;">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
 
 ---
 # 関連研究
-## 曲線座標系を定義する手法
-![w:750](image.png)
-<div style="text-align: right; font-size: 12pt; padding-top:0px;">[3] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
+## 曲線座標系を定義する手法 [1]
+
+![w:750](images/6.png)
+<div style="text-align: right; font-size: 11pt; padding-top:0px;">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
 
 ---
 <!--
