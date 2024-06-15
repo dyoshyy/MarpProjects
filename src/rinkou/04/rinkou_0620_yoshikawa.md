@@ -55,8 +55,10 @@ _class: eyecatch
 ## 二重降下 (Double Descent, Belkin et al., 2019)
 - 学習曲線,モデルの複雑と汎化性能の関係から矛盾は解消される
 
-<img src="images/9_9.png" width="760" style="margin: -20px auto;">
-
+<div style="margin: -20px auto; text-align: center; font-size: 24px">
+<img src="images/9_9.png" width="700" ><br>
+<span style="margin: -0px auto;"> 図 9.9 パラメータ数と誤差の関係 </span>
+</div>
 
 ---
 # 9.3.2 Double descent
@@ -77,13 +79,43 @@ _class: eyecatch
 ## 二重降下 (Double Descent, Belkin et al., 2019)
 - 訓練データに正確に適合するのに十分なパラメータ数のとき二回目の降下が発生 (Belkin et al., 2019)
 - **effective model complexity** (Nakkiran et al., 2019)
-  - 訓練誤差がゼロになるときの最大の訓練データ数
+  - 訓練誤差がゼロになる最大の訓練データ数
   - この値が訓練データ中のデータ数を超えると二重降下が発生
 
 ---
 # 9.3.2 Double descent
 ## 二重降下と同様の振る舞い
+- early stoppingを用いてモデルの複雑さを制御することで同様の振る舞いが観測される
 
+<div style="margin: -20px auto; text-align: center; font-size: 24px">
+<img src="images/9_10.png" width="600" ><br>
+<span style="margin: -0px auto;"> 図 9.10 エポック数とテスト誤差の関係 </span>
+</div>
+
+---
+# 9.3.2 Double descent
+## 二重降下と同様の振る舞い
+- $1/\lambda$ (正則化パラメータ) に対するテスト誤差の関係においても二重降下が観測される
+  - $\lambda$が大きいとモデルの複雑さが抑制されるため
+
+---
+# 9.3.2 Double descent
+## データ数と汎化性能
+- Transformerにて埋め込み次元を増やすとモデルの複雑さが上昇
+- 埋め込み次元を増やすと
+テスト誤差は(図9.11)
+  - 全体的に減少
+  - 臨界領域では上昇
+
+⇒ **データ数を増やして汎化性能が
+減少する可能性がある**
+
+<div style="position: absolute; top:260px; left: 650px; text-align: center;">
+<div>
+<img src="images/9_11.png" width="600" ><br>
+<span style="font-size: 24px" >図 9.11 埋め込み次元数とテスト誤差の関係 </span>
+</div>
+</div>
 
 ---
 <!--
@@ -94,8 +126,9 @@ _class: eyecatch
 ---
 # 9.4 Parameter Sharing
 ## パラメータ共有
-
-- ネットワーク内の重みをグループ分け、各グループ内で重みが同じ値を共有させる
+- $L_2$正則化は重みを小さくすることで過学習を抑制
+  - ネットワークの複雑さを制限する別の方法としてパラメータ共有
+- 重みをグループに分け、各グループ内で重みが同じ値を取るようにする
 - これによりネットワークの自由度が下がり、モデル複雑さが制限される
 - 例えば畳み込みニューラルネットワークでは、この手法を用いてデータの平行移動などの不変性をエンコーディングする
 
