@@ -141,48 +141,92 @@ _class: eyecatch
 # 9.4.1 Soft weight sharing
 ---
 # 9.4.1 Soft weight sharing
-## Soft Weight Sharing: 概要
-
-- 重みをガウス混合モデルでクラスタリングし、各グループ内で重みが類似した値を取るよう正則化する柔軟なアプローチ
-- ガウス成分の混合比率 $\{\pi_j\}$、平均 $\{\mu_j\}$、分散 $\{\sigma_j^2\}$ もデータから学習される
+## 概要
+- グループ内のパラメータが**近い**値を取るように正則化
+- (9.1)の正則化はすべてのパラメータが0に近い値を取るようにする
+$$\tilde{E}(\mathbf{w}) = {E}(\mathbf{w}) + \dfrac{\lambda}{2}\mathbf{w}^T\mathbf{w} \tag{9.1}$$
+- ガウス混合モデルを用いることで複数のグループを形成し、各グループ内でパラメータが近い値を取るようにする
+- 混合比率 $\{\pi_j\}$、平均 $\{\mu_j\}$、分散 $\{\sigma_j^2\}$ もデータから学習される
 
 --- 
 # 9.4.1 Soft weight sharing
-## Soft Weight Sharing: 重みの事前分布
+## 重みの事前分布
 
 - 重みwの事前分布をガウス混合モデルで定義
-  - $p(w) = \prod_i \sum_j \pi_j \mathcal{N}(w_i|\mu_j, \sigma_j^2)$ (式9.21)
-- この事前分布の対数の負値を正則化項 $\Omega(w)$ とする
-  - $\Omega(w) = -\sum_i \ln(\sum_j \pi_j \mathcal{N}(w_i|\mu_j, \sigma_j^2))$ (式9.22)
+$$
+p(\mathbf{w}) = \prod_i \left( \sum_{j=1}^{K} \pi_j \mathcal{N}(w_i|\mu_j, \sigma_j^2) \right)  \tag{9.21}
+$$
+- この事前分布の対数の負値を正則化関数 $\Omega(w)$ とする
+$$
+\Omega(\mathbf{w}) = -\sum_i \ln\left(\sum_{j=1}^{K} \pi_j \mathcal{N}(w_i|\mu_j, \sigma_j^2)\right) \tag{9.22}
+$$
 
 ---
 # 9.4.1 Soft weight sharing
-## Soft Weight Sharing: 損失関数
+## 誤差関数
 
-- 総損失関数は誤差関数とSoft Weight Sharing の正則化項の和
-  - $\tilde{E}(w) = E(w) + \lambda\Omega(w)$ (式9.23)
-- この損失関数を{wi}と{πj, μj, σj}それぞれについて勾配降下法で最小化する
+- soft weight sharing正則化項を追加した誤差関数
+$$
+\tilde{E}(\mathbf{w}) = E(\mathbf{w}) + \lambda\Omega(\mathbf{w}) \tag{9.23}
+$$
+- $\{w_i\}$と$\{\pi_j, \mu_j, \sigma_j\}$それぞれについて勾配降下法で最小化する
+- $\{\pi_j\}$を各ガウス成分が重みを生成した事前確率として解釈し、対応する事後確率を導入
+
+$$
+\gamma_j(w_i) = \dfrac{\pi_j \mathcal{N}(w_i|\mu_j, \sigma_j^2)}{\sum_{k} \pi_k \mathcal{N}(w_i|\mu_k, \sigma_k^2)} \tag{9.24}
+$$
 
 ---
 # 9.4.1 Soft weight sharing
-## Soft Weight Sharing: 更新則
+## 誤差関数の勾配 (重み)
 
 - 重み $w_i$ の勾配
-  - $\frac{\partial\tilde{E}}{\partial w_i} = \frac{\partial E}{\partial w_i} + \lambda\sum_j \gamma_j(w_i)\frac{w_i - \mu_j}{\sigma_j^2}$ (式9.25)
-- 平均 $\mu_j$ の勾配 
-  - $\frac{\partial\tilde{E}}{\partial\mu_j} = \lambda\sum_i \gamma_j(w_i)\frac{\mu_j - w_i}{\sigma_j^2}$ (式9.26)  
-- 分散 $\sigma_j^2$ の勾配 (ロバストな実装で $\sigma_j^2 = e^{\xi_j}$ と置く)
-  - $\frac{\partial\tilde{E}}{\partial\xi_j} = \frac{\lambda}{2}\sum_i \gamma_j(w_i)\left(1 - \frac{(w_i - \mu_j)^2}{\sigma_j^2}\right)$ (式9.28)
-
-$\gamma_j(w_i)$ は $w_i$ が成分 $j$ から生成された事後確率
+$$\frac{\partial\tilde{E}}{\partial w_i} = \frac{\partial E}{\partial w_i} + \lambda\sum_j \gamma_j(w_i)\frac{w_i - \mu_j}{\sigma_j^2} \tag{9.25}
+$$
+⇒ それぞれの重みをグループ内の平均値に引き寄せる
 
 ---
 # 9.4.1 Soft weight sharing
-## Soft Weight Sharing: 長所
+## 誤差関数の勾配 (平均)
+- 平均 $\mu_j$ の勾配 
+$$
+\frac{\partial\tilde{E}}{\partial\mu_j} = \lambda\sum_i \gamma_j(w_i)\frac{\mu_j - w_i}{\sigma_j^2} \tag{9.26}
+$$
+⇒ $\mu_j$ をグループ内の重みの平均値へ押し出す
 
-- 硬直的なパラメータ共有の制約を緩和し、柔軟なグループ分けが可能
-- グループ内の重み分布の特性も自動で最適化できる
-- 確率モデルに基づく理論的根拠が明確
-- 教師なしデータからの事前知識を教師ありモデルに取り入れるハイブリッドモデルへの応用も可能
+---
+# 9.4.1 Soft weight sharing
+## 誤差関数の勾配 (分散)
+- $\{\sigma_j^2\}$が正になることを保証するために以下のように置く
+$$
+\sigma_j^2 = \exp(\xi_j) \tag{9.27}
+$$
+- 分散 $\sigma_j^2$ の勾配 ($\xi$の勾配)
+$$
+\frac{\partial\tilde{E}}{\partial\xi_j} = \frac{\lambda}{2}\sum_i \gamma_j(w_i)\left(1 - \frac{(w_i - \mu_j)^2}{\sigma_j^2}\right) \tag{9.28}
+$$
+⇒ $\sigma_j^2$ を$\mu_j$周りの重みの二乗偏差に近づける
 
-正則化手法として現在でも広く用いられている有力な手法である
+
+---
+# 9.4.1 Soft weight sharing
+## 誤差関数の勾配 (混合係数)
+- 混合係数 $\pi_j$ の制約を、補助変数 $\eta_j$とsoftmax関数を用いて表現
+$$
+\sum_j \pi_j = 1,\ 0 \le \pi_j \le 1 \tag{9.29}
+$$
+$$
+\pi_j = \dfrac{\exp{\eta_j}}{\sum_{k=1}^K \exp{\eta_k}} \tag{9.30}
+$$
+- 混合係数 $\pi_j$ の勾配 ($\eta$の勾配)
+$$
+\frac{\partial\tilde{E}}{\partial\eta_j} = \lambda\sum_i \{\pi_j - \gamma_j(w_i)\}  \tag{9.31}
+$$
+
+
+---
+# 9.4.1 Soft weight sharing
+## 別の応用
+- 教師なし生成モデルと教師あり識別モデルの組み合わせ (Lasserre, Bishop, Minka, 2006)
+- ラベルなしデータが大量にあり、ラベル付きデータが少ない場合に有効
+- 生成モデルの利点（未ラベルデータの活用）と識別モデルの利点（モデルの不適合への頑健性）を併せ持つことが可能
