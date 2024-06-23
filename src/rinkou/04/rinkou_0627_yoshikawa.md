@@ -10,12 +10,12 @@ _class: title
 # Deep Learning: Foundations and Concepts 2024
 
 Section: 9.3.2 ~ 9.4
-2024/6/20 Daiki Yoshikawa
+2024/6/27 Daiki Yoshikawa
 
 ---
 <!--
 class: slides
-footer: 2024/06/06<span style="margin-left:250px;">Deep Learning : Foundations and Concepts 2024</span>
+footer: 2024/06/27<span style="margin-left:250px;">Deep Learning : Foundations and Concepts 2024</span>
 paginate: true
 -->
 # 目次
