@@ -7,10 +7,11 @@ size: 16:9
 <!--
 _class: title
 -->
-# 2024年度 後期雑誌会
+<h1> 生成モデルを用いた<br>意味論的に自然な画像編集 </h1>
 
+## 2024年度 後期雑誌会
+### 情報認識学研究室 M1 吉川 大貴
 
-## 情報認識学研究室 M1 吉川 大貴
 
 ---
 <!--
@@ -153,7 +154,7 @@ $$ -->
 ---
 # 関連研究
 ## ベクトル場を定義する手法[11]
-- LinearGANSpaceと同じ教師なしフレームワークで学習
+- 線形ベクトル演算を定義する手法と同じ、教師なしフレームワークで学習
 
 ![w:800](images/warpingStructure.png)
 <div style="text-align: right; font-size: 14pt;">
@@ -171,7 +172,13 @@ $$ -->
 <div style="text-align: right; font-size: 11pt;  position: fixed; bottom: 40px; right: 20px">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
 
 ---
-# 関連研究
+<!--
+_class: eyecatch
+-->
+# 提案手法
+
+---
+# 提案手法
 ## 曲線座標系を定義する手法 [1]
 - 潜在空間に曲線座標系を仮定し、直交座標系への写像$f:\mathcal{Z}\rightarrow \mathcal{V}$を学習
 
@@ -180,7 +187,7 @@ $$ -->
 <div style="text-align: right; font-size: 10pt; padding-top:0px;">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
 
 ---
-# 関連研究
+# 提案手法
 ## 曲線座標系を定義する手法 [1]
 - 線形ベクトル演算、ベクトル場の両方の利点を持つ
 
@@ -188,7 +195,7 @@ $$ -->
 <div style="text-align: right; font-size: 11pt; padding-top:0px;">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
 
 ---
-# 関連研究
+# 提案手法
 ## 曲線座標系を定義する手法 [1]
 
 ![w:750](images/6.png)
@@ -211,7 +218,7 @@ _class: eyecatch
 ---
 # 修論に向けて
 ## 生成モデルのアラインメント
-![w:800](images/5.png)
+![w:800](images/alignment.png)
 
 <div style="text-align: right; font-size: 14pt;">
 M. Ladron de Guevara, et al. (2023) Cross-modal Latent Space Alignment for Image to Avatar Translation.
