@@ -7,23 +7,25 @@ size: 16:9
 <!--
 _class: title
 -->
-# 2024年度 前期雑誌会
+# 2024年度 後期雑誌会
+
 
 ## 情報認識学研究室 M1 吉川 大貴
 
 ---
 <!--
 class: slides
-footer: 2024/06/11<span style="margin-left:380px;"> 2024年度前期雑誌会</span>
+footer: 2024/12/4<span style="margin-left:380px;"> 2024年度後期雑誌会</span>
 paginate: true
 -->
 # 目次
 - 研究背景
 - 関連研究
-  - 直交座標系を学習する手法
   - 線形ベクトル演算を定義する手法
   - ベクトル場を定義する手法
+- 提案手法
   - 曲線座標系を定義する手法
+  - 実験結果
 - 修論に向けて
 
 ---
@@ -48,7 +50,7 @@ _class: eyecatch
 - 生成器は識別機を騙すように、識別器は偽物を見破るように学習
 - 学習後は潜在変数から生成器を通してデータを生成
 
-![w:700](images/GAN.svg)
+![w:700](images/GAN.drawio.svg)
 
 <div style="text-align: right; font-size: 18pt;">[2] Goodfellow, I. J., et al. (2014). Generative adversarial nets NIPS</div>
 
@@ -72,7 +74,7 @@ $$
 - 潜在空間におけるデータの分布を学習
 - 学習後は潜在変数からデコーダーを用いてデータを生成
 
-![w:800](images/VAE.svg)
+![w:800](images/VAE.drawio.svg)
 
 <div style="text-align: right; font-size: 18pt;">[3] Kingma, D. P., & Welling, M. (2013). Auto-encoding variational bayes ICLR</div>
 
@@ -90,17 +92,9 @@ $$
 ---
 # 研究背景
 ## ◆ 潜在変数と画像編集
-- 
+- 潜在変数には意味的な情報が含まれており、属性ベクトルの演算によって画像を編集することが可能
 
-![w:600](images/DeepGenerative.svg)
-
----
-# 研究背景
-- 自然で高精度な編集をするための手法が複数提案されている [1]
-
-![w:1100](images/1.png)
-
-<div style="text-align: right; font-size: 10pt;">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
+![w:550](images/ImageEditing.drawio.svg)
 
 ---
 <!--
@@ -110,39 +104,11 @@ _class: eyecatch
 
 ---
 # 関連研究
-## 直交座標系を学習する手法
-- 表現ベクトルの各要素に特定の属性が紐づけられるように制約
-  - GANにおいて潜在変数と画像の相互情報量を最大化 [4]
-  - VAEにおいて目的関数の*KL*項の影響を大きくする [5]
+- 自然で高精度な編集をするための手法が複数提案されている [1]
 
-**問題点**
-  - 再学習が必要となり、学習コストが高い
-  - 学習が不安定化し、生成画像の品質が低下する
-→ 学習済みモデルに対して編集を行う手法が必要
+![w:1100](images/1.png)
 
-<div style="text-align: right; font-size: 13pt; padding-top: ２0px">
-[4] Xi Chen. et al.(2016) InfoGAN: Interpretable Representation Learning by Information Maximizing Generative Adversarial Nets 
-<br>
-[5] I. Higgins et al. (2017) beta-VAE: Learning Basic Visual Concepts with a Constrained Variational Framework
-</div>
-
----
-# 関連研究
-## 線形ベクトル演算を定義する手法
-- 学習済みモデルのパラメータを解析 [6]
-- PCAを用いて潜在空間において属性に対応する主成分を抽出 [7]
-- 生成された画像を属性によってグループ分けし、その差を属性ベクトルとみなす [8]
-- 表現ベクトルを変化させ、それによって引き起こされる画像の変化をグループ分けする [9]
-
-<div style="text-align: right; font-size: 14pt; padding-top: 40px">
-[6] Y. Shen, et al. (2021) Closed-Form Factorization of Latent Semantics in GANs
-<br>
-[7] E. Härkönen, et al. (2020) GANSpace: Discovering Interpretable GAN Controls
-<br>
-[8] A. Radford, et al. (2016) Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks
-<br>
-[9] A. Voynov, A. Babenko (2020) Unsupervised Discovery of Interpretable Directions in the GAN Latent Space
-</div>
+<div style="text-align: right; font-size: 10pt;">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
 
 
 ---
@@ -159,7 +125,7 @@ _class: eyecatch
 
 ---
 # 関連研究
-## 線形ベクトル演算を定義する手法
+## 線形ベクトル演算を定義する手法の問題点
 - 現実に存在するデータには偏りやゆがみ、属性間の相関がある
 - 潜在空間中の基準点によって属性ベクトルの向きが異なる [10]
 →属性ベクトルの向きを潜在空間の座標に依存する形で定義
@@ -171,23 +137,38 @@ _class: eyecatch
 
 ---
 # 関連研究
-## ベクトル場を定義する手法
-- RBFカーネルの重み付き和で属性ごとのベクトル場を定義 [11]
+## ベクトル場を定義する手法[11]
+- RBF(Radial Basis Function)の重み付き和で属性ごとのベクトル場を定義
+<!-- $$
+f(\mathbf{z}) = \sum_{i=1}^{N} \alpha_i \exp(-\gamma_i||\mathbf{z}-\mathbf{s}_i||^2)
+$$ -->
 
+![w:500](images/warping1.png)
+![w:500](images/warping2.png)
 
-<img src="images/3.png" width="1200" style="padding-top:80">
-<div style="text-align: right; font-size: 14pt; padding-top: 10px">
+<div style="text-align: right; font-size: 14pt; position: fixed; bottom: 40px; right: 20px">
 [11] C. Tzelepis, et al. (2021) WarpedGANSpace: Discovering and Interpolating Interpretable GAN Controls
 </div>
 
 ---
 # 関連研究
-## ベクトル場を定義する手法
+## ベクトル場を定義する手法[11]
+- LinearGANSpaceと同じ教師なしフレームワークで学習
+
+![w:800](images/warpingStructure.png)
+<div style="text-align: right; font-size: 14pt;">
+[11] C. Tzelepis, et al. (2021) WarpedGANSpace: Discovering and Interpolating Interpretable GAN Controls
+</div>
+
+---
+# 関連研究
+## ベクトル場を定義する手法の問題点
 - 座標が局所的にしか定義されていないため、大域的には不整合が起こる可能性がある [1]
 - ベクトル場は一般に非可換であり、編集が非可換になる
-→ 可換なベクトル場を定義する手法が必要
+  - 例：笑顔→年齢と年を年齢→笑顔の編集結果が異なる
+  → 可換なベクトル場を定義する手法が必要
 
-<div style="text-align: right; font-size: 11pt; padding-top:240px;">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
+<div style="text-align: right; font-size: 11pt;  position: fixed; bottom: 40px; right: 20px">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
 
 ---
 # 関連研究
