@@ -41,43 +41,40 @@ _class: eyecatch
 - 画像を自由に作り出すことはコンピュータビジョンの研究における究極のゴールの一つ [1]
 - 深層生成モデルを用いた画像生成手法が提案されてきた
   - 例：GAN, VAE, 拡散モデル
+  
+<img src='https://webbigdata.jp/wp-content/uploads/2022/08/Diffusion-model-6-500x152.jpg' width='800' style='margin: auto;'>
 
 <div style="text-align: right; font-size: 11pt; padding-top:270px;">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
 
 ---
 # 研究背景
 ## ◆ GAN (Generative Adversarial Networks) [2]
-- 2つの敵対的なネットワークを競わせることで学習
-- 生成器は識別機を騙すように、識別器は偽物を見破るように学習
-- 学習後は潜在変数から生成器を通してデータを生成
+- 生成器は識別機を騙すように、識別器は偽物を見破るように交互に学習
 
-![w:700](images/GAN.drawio.svg)
+![w:800](images/GAN.drawio.svg)
 
-<div style="text-align: right; font-size: 18pt;">[2] Goodfellow, I. J., et al. (2014). Generative adversarial nets NIPS</div>
+<div style="text-align: right; font-size: 14pt; position: fixed; bottom: 40px; right: 30px">[2] Goodfellow, I. J., et al. (2014). Generative adversarial nets NIPS</div>
 
 ---
 # 研究背景
 ## ◆ GAN (Generative Adversarial Networks) [2]
 - 生成器 $G$ と識別器 $D$ の最適化問題
 
-$$
-\min_G \max_D V(D, G) = \mathbb{E}_{x \sim p_{\text{data}}(x)}[\log D(x)] + \mathbb{E}_{z \sim p_z(z)}[\log(1 - D(G(z)))]
-$$
-![w:700](images/GAN.svg)
+$$\min_G \max_D V(D, G) = \mathbb{E}_{x \sim p_{\text{data}}(x)}[\log D(x)] + \mathbb{E}_{z \sim p_(z)} [\log(1 - D(G(z)))]$$
 
-<div style="text-align: right; font-size: 18pt;">[2] Goodfellow, I. J., et al. (2014). Generative adversarial nets NIPS</div>
+![w:800](images/GAN.drawio.svg)
 
 ---
 # 研究背景
 
 ## ◆ VAE (Variational Autoencoder) [3]
-- EMアルゴリズムと変分ベイズを融合させた手法
 - 潜在空間におけるデータの分布を学習
+- 再構成誤差を最小化するように学習
 - 学習後は潜在変数からデコーダーを用いてデータを生成
 
 ![w:800](images/VAE.drawio.svg)
 
-<div style="text-align: right; font-size: 18pt;">[3] Kingma, D. P., & Welling, M. (2013). Auto-encoding variational bayes ICLR</div>
+<div style="text-align: right; font-size: 12pt;">[3] Kingma, D. P., & Welling, M. (2013). Auto-encoding variational bayes ICLR</div>
 
 ---
 # 研究背景
@@ -95,7 +92,7 @@ $$
 ## ◆ 潜在変数と画像編集
 - 潜在変数には意味的な情報が含まれており、属性ベクトルの演算によって画像を編集することが可能
 
-![w:550](images/ImageEditing.drawio.svg)
+<img src='images/ImageEditing.drawio.svg' width='600' style='margin: auto;'>
 
 ---
 <!--
@@ -106,11 +103,11 @@ _class: eyecatch
 ---
 # 関連研究
 - 自然で高精度な編集をするための手法が複数提案されている [1]
+- 学習後の潜在空間を解析する手法では再学習が不要
 
-![w:1100](images/1.png)
+![w:1000](images/1.png)
 
-<div style="text-align: right; font-size: 10pt;">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
-
+<div style="text-align: right; font-size: 10pt; position: fixed; bottom: 40px; right: 20px">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
 
 ---
 # 関連研究
@@ -129,7 +126,7 @@ _class: eyecatch
 ## 線形ベクトル演算を定義する手法の問題点
 - 現実に存在するデータには偏りやゆがみ、属性間の相関がある
 - 潜在空間中の基準点によって属性ベクトルの向きが異なる [10]
-→属性ベクトルの向きを潜在空間の座標に依存する形で定義
+→属性ベクトルの向きを潜在空間の座標に依存させればよい
 
 <div style="text-align: right; font-size: 14pt; padding-top: 280px">
 [10] V. Khrulkov, et al. (2021) Latent Transformations via NeuralODEs for GAN-based Image Editing
@@ -140,12 +137,12 @@ _class: eyecatch
 # 関連研究
 ## ベクトル場を定義する手法[11]
 - RBF(Radial Basis Function)の重み付き和で属性ごとのベクトル場を定義
-<!-- $$
+$$
 f(\mathbf{z}) = \sum_{i=1}^{N} \alpha_i \exp(-\gamma_i||\mathbf{z}-\mathbf{s}_i||^2)
-$$ -->
-
-![w:500](images/warping1.png)
-![w:500](images/warping2.png)
+$$
+$$
+\nabla f(\mathbf{z}) = \sum_{i=1}^{N} -2\gamma_i\alpha_i(\mathbf{z}-\mathbf{s}_i)\exp(-\gamma_i||\mathbf{z}-\mathbf{s}_i||^2)
+$$
 
 <div style="text-align: right; font-size: 14pt; position: fixed; bottom: 40px; right: 20px">
 [11] C. Tzelepis, et al. (2021) WarpedGANSpace: Discovering and Interpolating Interpretable GAN Controls
@@ -160,6 +157,20 @@ $$ -->
 <div style="text-align: right; font-size: 14pt;">
 [11] C. Tzelepis, et al. (2021) WarpedGANSpace: Discovering and Interpolating Interpretable GAN Controls
 </div>
+
+---
+# 関連研究
+## ベクトル場を定義する手法[11]
+<br>
+
+![w:600](images/warping1.png)
+![w:600](images/warping2.png)
+
+<div style="text-align: right; font-size: 14pt; position: fixed; bottom: 40px; right: 20px">
+[11] C. Tzelepis, et al. (2021) WarpedGANSpace: Discovering and Interpolating Interpretable GAN Controls
+</div>
+
+
 
 ---
 # 関連研究
@@ -179,7 +190,7 @@ _class: eyecatch
 
 ---
 # 提案手法
-## 曲線座標系を定義する手法 [1]
+## 曲線座標系を定義する手法 (DeCurvEd)[1]
 - 潜在空間に曲線座標系を仮定し、直交座標系への写像$f:\mathcal{Z}\rightarrow \mathcal{V}$を学習
 
 <img src="images/4.png" width="1200" style="padding-top:20; padding-left:0">
@@ -189,10 +200,13 @@ _class: eyecatch
 ---
 # 提案手法
 ## 曲線座標系を定義する手法 [1]
-- 線形ベクトル演算、ベクトル場の両方の利点を持つ
+- DeCurvEdはベクトル場を定義する手法の特殊な場合
+- 線形ベクトル演算を定義する手法はDeCurvEdの特殊な場合
+→ 線形ベクトル演算、ベクトル場の両方の利点を持つ
 
-![w:980](images/1.png)
-<div style="text-align: right; font-size: 11pt; padding-top:0px;">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
+<!-- ![w:980](images/1.png)
+<div style="text-align: right; font-size: 11pt; padding-top:0px;">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div> -->
+![w:600](images/MethodsComparison.drawio.svg)
 
 ---
 # 提案手法
