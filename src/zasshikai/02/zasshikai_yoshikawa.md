@@ -41,10 +41,8 @@ _class: eyecatch
 - 画像を自由に作り出すことはコンピュータビジョンの研究における究極のゴールの一つ [1]
 - 深層生成モデルを用いた画像生成手法が提案されてきた
   - 例：GAN, VAE, 拡散モデル
-  
-<img src='https://webbigdata.jp/wp-content/uploads/2022/08/Diffusion-model-6-500x152.jpg' width='800' style='margin: auto;'>
 
-<div style="text-align: right; font-size: 11pt; padding-top:270px;">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
+<div style="text-align: right; font-size: 11pt; position: fixed; bottom: 40px; right: 30px">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
 
 ---
 # 研究背景
@@ -80,9 +78,9 @@ $$\min_G \max_D V(D, G) = \mathbb{E}_{x \sim p_{\text{data}}(x)}[\log D(x)] + \m
 # 研究背景
 
 ## ◆ 多様体仮説
-自然界に存在する高次元のデータの分布が、低次元多様体の中に埋め込まれているとする仮説
+自然界に存在する高次元のデータの分布は低次元多様体として捉えることができるという仮説
 
-- GAN, VAEではデータの低次元多様体を潜在表現として獲得していると捉えることができる
+- GAN, VAEではデータの低次元多様体を潜在表現として獲得
 
 ![w:400](images/manifold1.png)
 ![w:400](images/manifold2.png)
@@ -107,16 +105,16 @@ _class: eyecatch
 
 ![w:1000](images/1.png)
 
-<div style="text-align: right; font-size: 10pt; position: fixed; bottom: 40px; right: 20px">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
+<div style="text-align: right; font-size: 10pt; position: fixed; bottom: 40px; right: 30px">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
 
 ---
 # 関連研究
 ## 線形ベクトル演算を定義する手法 [9]
 生成器Gは固定したまま、次の2つを学習
-1. 行列$A\in\mathbb{R}^{d\times K}$: 属性インデックスから潜在変数の変化量を決定
+1. 行列$A\in\mathbb{R}^{d\times K}$: K個の属性ベクトル
 2. リンコンストラクタ$R$: 編集前後の画像から属性ベクトルと変化量を回帰
 
-![w:1150](images/2.png)
+![w:1150](images/linearGANSpace.png)
 <div style="text-align: right; font-size: 14pt; padding-top: 10px">
 [9] A. Voynov, A. Babenko (2020) Unsupervised Discovery of Interpretable Directions in the GAN Latent Space
 </div>
@@ -128,7 +126,7 @@ _class: eyecatch
 - 潜在空間中の基準点によって属性ベクトルの向きが異なる [10]
 →属性ベクトルの向きを潜在空間の座標に依存させればよい
 
-<div style="text-align: right; font-size: 14pt; padding-top: 280px">
+<div style="text-align: right; font-size: 14pt;  position: fixed; bottom: 40px; right: 30px">
 [10] V. Khrulkov, et al. (2021) Latent Transformations via NeuralODEs for GAN-based Image Editing
 </div>
 
@@ -144,7 +142,7 @@ $$
 \nabla f(\mathbf{z}) = \sum_{i=1}^{N} -2\gamma_i\alpha_i(\mathbf{z}-\mathbf{s}_i)\exp(-\gamma_i||\mathbf{z}-\mathbf{s}_i||^2)
 $$
 
-<div style="text-align: right; font-size: 14pt; position: fixed; bottom: 40px; right: 20px">
+<div style="text-align: right; font-size: 14pt; position: fixed; bottom: 40px; right: 30px">
 [11] C. Tzelepis, et al. (2021) WarpedGANSpace: Discovering and Interpolating Interpretable GAN Controls
 </div>
 
@@ -166,7 +164,7 @@ $$
 ![w:600](images/warping1.png)
 ![w:600](images/warping2.png)
 
-<div style="text-align: right; font-size: 14pt; position: fixed; bottom: 40px; right: 20px">
+<div style="text-align: right; font-size: 14pt; position: fixed; bottom: 40px; right: 30px">
 [11] C. Tzelepis, et al. (2021) WarpedGANSpace: Discovering and Interpolating Interpretable GAN Controls
 </div>
 
@@ -180,7 +178,7 @@ $$
   - 例：笑顔→年齢と年を年齢→笑顔の編集結果が異なる
   → 可換なベクトル場を定義する手法が必要
 
-<div style="text-align: right; font-size: 11pt;  position: fixed; bottom: 40px; right: 20px">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
+<div style="text-align: right; font-size: 11pt;  position: fixed; bottom: 40px; right: 30px">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
 
 ---
 <!--
@@ -193,9 +191,28 @@ _class: eyecatch
 ## 曲線座標系を定義する手法 (DeCurvEd)[1]
 - 潜在空間に曲線座標系を仮定し、直交座標系への写像$f:\mathcal{Z}\rightarrow \mathcal{V}$を学習
 
-<img src="images/4.png" width="1200" style="padding-top:20; padding-left:0">
+<img src="images/curvilinearGANSpace.png" width="1200" style="padding-top:20; padding-left:0">
 
 <div style="text-align: right; font-size: 10pt; padding-top:0px;">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
+
+---
+# 提案手法
+## 曲線座標系を定義する手法 (DeCurvEd)
+**直交化潜在空間Vにおける編集**
+$$
+\psi_k^t(v) \coloneqq v + te_k.
+$$
+
+$$
+(\psi_k^t \circ \psi_l^s)(v) = v + te_k + se_l = v + se_l + te_k = (\psi_l^s \circ \psi_k^t)(v).
+$$
+
+<br>
+
+**潜在空間における編集**
+$$
+\phi_k^t\coloneqq f^{-1} \circ \psi_k^t \circ f.
+$$
 
 ---
 # 提案手法
@@ -210,10 +227,40 @@ _class: eyecatch
 
 ---
 # 提案手法
-## 曲線座標系を定義する手法 [1]
+## 実験結果
+![w:1000](images/commutativity.png)
 
-![w:750](images/6.png)
-<div style="text-align: right; font-size: 11pt; padding-top:0px;">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
+<div style='font-size: 16pt; text-align: center;'>
+O: original, S: “smile”, B: “bangs”, P: “pitch”, Y: “yaw”. C: “hair color”, L: “hair length”.
+</div>
+
+
+---
+# 提案手法
+## 実験結果
+
+![w:500](images/identityError1.png)
+![w:500](images/identityError2.png)
+
+<div style="text-align: right; font-size: 11pt; position: fixed; bottom: 40px; right: 30px">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
+
+
+---
+# 提案手法
+## 実験結果
+
+<!-- <div style='display: flex; justify-content: space-between'>
+<ul>
+<li>
+DeCurvEdは他の二手法に比べて副作用が少ない
+</li>
+
+</ul>
+<img src='images/sideEffects.png' width='500' style='justify-content: flex-end;'>
+</div> -->
+<img src='images/sideEffects.png' width='500' style='margin: auto'>
+
+<div style="text-align: right; font-size: 11pt; position: fixed; bottom: 30px; right: 30px">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
 
 ---
 <!--
