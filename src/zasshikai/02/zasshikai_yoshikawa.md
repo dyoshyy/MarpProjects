@@ -230,7 +230,7 @@ $$
 ---
 # 提案手法
 ## 実験結果
-![w:1000](images/commutativity.png)
+![w:1000](images/sequential_edit1.png)
 
 <div style='font-size: 16pt; text-align: center;'>
 O: original, S: “smile”, B: “bangs”, P: “pitch”, Y: “yaw”. C: “hair color”, L: “hair length”.
@@ -289,13 +289,18 @@ O: original, A: Attractive, M: Mustache, B: Bangs, S: Smiling.
 ---
 # 修論に向けて
 ## 追加実験 (教師あり×VAE)
-![w:800](images/VAEMale.png)
+![w:800](images/VAE_Male.drawio.svg)
 
 ---
+# 修論に向けて
+## 追加実験 (教師あり×VAE)
+![w:800](images/VAE_Smiling.drawio.svg)
+
+<!-- ---
 # Appendix
 ## 生成モデルのアラインメント
 ![w:800](images/alignment.png)
 
 <div style="text-align: right; font-size: 14pt;">
 M. Ladron de Guevara, et al. (2023) Cross-modal Latent Space Alignment for Image to Avatar Translation.
-</div>
+</div> -->
