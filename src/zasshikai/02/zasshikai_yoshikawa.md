@@ -240,9 +240,9 @@ O: original, S: “smile”, B: “bangs”, P: “pitch”, Y: “yaw”. C: �
 ---
 # 提案手法
 ## 実験結果
+- Linearに次ぎ、DeCurvEdは可換性が高い
 
-![w:500](images/identityError1.png)
-![w:500](images/identityError2.png)
+![w:1000](images/commutativeErrors.png)
 
 <div style="text-align: right; font-size: 11pt; position: fixed; bottom: 40px; right: 30px">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
 
@@ -288,6 +288,11 @@ O: original, A: Attractive, M: Mustache, B: Bangs, S: Smiling.
 
 ---
 # 修論に向けて
+## 追加実験 (教師あり×VAE)
+![w:800](images/VAEMale.png)
+
+---
+# Appendix
 ## 生成モデルのアラインメント
 ![w:800](images/alignment.png)
 
