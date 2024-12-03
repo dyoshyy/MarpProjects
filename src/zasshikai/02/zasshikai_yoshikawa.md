@@ -193,12 +193,12 @@ _class: eyecatch
 
 <img src="images/curvilinearGANSpace.png" width="1200" style="padding-top:20; padding-left:0">
 
-<div style="text-align: right; font-size: 10pt; padding-top:0px;">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
+<div style="text-align: right; font-size: 11pt;  position: fixed; bottom: 40px; right: 30px">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
 
 ---
 # 提案手法
-## 曲線座標系を定義する手法 (DeCurvEd)
-**直交化潜在空間Vにおける編集**
+## 曲線座標系を定義する手法 (DeCurvEd)[1]
+**直交化潜在空間における編集**
 $$
 \psi_k^t(v) \coloneqq v + te_k.
 $$
@@ -213,6 +213,8 @@ $$
 $$
 \phi_k^t\coloneqq f^{-1} \circ \psi_k^t \circ f.
 $$
+
+<div style="text-align: right; font-size: 11pt;  position: fixed; bottom: 40px; right: 30px">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div>
 
 ---
 # 提案手法
@@ -270,11 +272,19 @@ _class: eyecatch
 
 ---
 # 修論に向けて
+## 追加実験
+- ここまでの実験は教師なしフレームワークのみ
+→教師ありフレームワークでも有効性を示す
 - DeCurvEdは潜在変数に条件づけられた任意のモデルに適用可能
-1. VAE, Conditional PixelCNNといったモデルでも有効性を示す
-2. 生成モデルのアラインメント
-    - 入力画像と異なるドメインの画像を生成
-  例：人の顔写真にそっくりなPixar風の画像を生成
+→VAE, Diffusion Modelでも有効性を示す
+
+---
+# 修論に向けて
+## 追加実験 (教師あり×GAN)
+![w:1100](images/sequential_edit2.drawio.svg)
+<div style='font-size: 16pt; text-align: center;'>
+O: original, A: Attractive, M: Mustache, B: Bangs, S: Smiling.
+</div>
 
 ---
 # 修論に向けて
