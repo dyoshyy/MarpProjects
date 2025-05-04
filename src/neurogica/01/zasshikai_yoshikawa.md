@@ -20,7 +20,7 @@ footer: 2024/12/4<span style="margin-left:400px;"> 2025/05/03 勉強会</span>
 paginate: true
 -->
 # 目次
-- 研究背景
+- 前提知識
 - 関連研究
   - 線形ベクトル演算を定義する手法
   - ベクトル場を定義する手法
@@ -34,10 +34,10 @@ paginate: true
 <!--
 _class: eyecatch
 --> 
-# 研究背景
+# 前提知識
 
 <!-- ---
-# 研究背景
+# 前提知識
 - 画像を自由に作り出すことはコンピュータビジョンの研究における究極のゴールの一つ [1]
 - 深層生成モデルを用いた画像生成手法が提案されてきた
   - 例：GAN, VAE, 拡散モデル
@@ -45,7 +45,7 @@ _class: eyecatch
 <div style="text-align: right; font-size: 11pt; position: fixed; bottom: 40px; right: 30px">[1] T. Aoshima, T. Matsubara (2023). Deep Curvilinear Editing: Commutative and Nonlinear Image Manipulation for Pretrained Deep Generative Model. CVPR</div> -->
 
 ---
-# 研究背景
+# 前提知識
 ## ◆ GAN (Generative Adversarial Networks) [2]
 - 生成器は識別機を騙すように、識別器は偽物を見破るように交互に学習
 
@@ -54,7 +54,7 @@ _class: eyecatch
 <div style="text-align: right; font-size: 14pt; position: fixed; bottom: 40px; right: 30px">[2] Goodfellow, I. J., et al. (2014). Generative adversarial nets NIPS</div>
 
 ---
-# 研究背景
+# 前提知識
 ## ◆ GAN (Generative Adversarial Networks) [2]
 - 生成器 $G$ と識別器 $D$ の最適化問題
 
@@ -63,7 +63,7 @@ $$\min_G \max_D V(D, G) = \mathbb{E}_{x \sim p_{\text{data}}(x)}[\log D(x)] + \m
 ![w:800](images/GAN.drawio.svg)
 
 ---
-# 研究背景
+# 前提知識
 
 ## ◆ VAE (Variational Autoencoder) [3]
 - 潜在空間におけるデータの分布を学習
@@ -75,7 +75,7 @@ $$\min_G \max_D V(D, G) = \mathbb{E}_{x \sim p_{\text{data}}(x)}[\log D(x)] + \m
 <div style="text-align: right; font-size: 12pt;">[3] Kingma, D. P., & Welling, M. (2013). Auto-encoding variational bayes ICLR</div>
 
 ---
-# 研究背景
+# 前提知識
 
 ## ◆ 多様体仮説
 自然界に存在する高次元のデータの分布は低次元多様体として捉えることができるという仮説
@@ -87,7 +87,7 @@ $$\min_G \max_D V(D, G) = \mathbb{E}_{x \sim p_{\text{data}}(x)}[\log D(x)] + \m
 <br>
 
 ---
-# 研究背景
+# 前提知識
 ## ◆ 潜在変数と画像編集
 - 潜在変数には意味的な情報が含まれており、属性ベクトルの演算によって画像を編集することが可能
 
